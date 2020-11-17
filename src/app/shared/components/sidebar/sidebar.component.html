@@ -1,0 +1,41 @@
+<section class="sidebar" data-color="dark">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+  -->
+    <div class="logo d-flex">
+      <a href="#" class="simple-text logo-mini">
+        <img src="./assets/imgs/quokka-icon.png" alt="">
+      </a>
+      <a href="#" class="simple-text logo-normal">
+        Quokka pelis
+      </a>
+    </div>
+    <div class="sidebar-wrapper" id="sidebar-wrapper">
+      <ul class="nav">
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/peliculas">
+            <i class="fas fa-film"></i>
+            <p class="font-weight-bold">Películas</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/series">
+            <i class="fas fa-photo-video"></i>
+            <p class="font-weight-bold">Series</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/perfil">
+            <i class="fas fa-user"></i>
+            <p class="font-weight-bold">Mi perfil</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/pagos">
+            <i class="fas fa-money-bill-wave"></i>
+            <p class="font-weight-bold">Mis pagos</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+</section>

@@ -28,7 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/scss/now-ui-dashboard.scss",
+              "src/scss/styles.scss"
             ],
             "scripts": []
           },
@@ -123,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "quokka-pelis-frontend"
+    }
+  },
+  "defaultProject": "quokka-pelis-frontend",
+  "cli": {
+    "analytics": false
+  }
 }

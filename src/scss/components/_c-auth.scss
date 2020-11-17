@@ -1,0 +1,14 @@
+.c-auth{
+    min-height: 100vh;
+    background: var(--color-base);
+    &__container{
+        max-width: 100%;
+        @include from('sm'){
+            max-width: 75%;
+        }
+    }
+    &__logo{
+        width: 200px;
+        margin-bottom: 1rem;
+    }
+}

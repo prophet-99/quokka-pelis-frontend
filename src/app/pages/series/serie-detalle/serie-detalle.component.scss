@@ -1,0 +1,11 @@
+.sh-accordion-father{
+    &:hover{
+        background-color: var(--card-hover);
+    }
+}
+
+.sh-accordion-item{
+    &:hover{
+        background-color: #24292d;
+    }
+}

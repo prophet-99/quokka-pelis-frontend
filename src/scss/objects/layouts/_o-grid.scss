@@ -1,0 +1,43 @@
+.o-grid-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 15px;
+}
+  
+@for $i from 1 through 12 {
+    .o-grid-column-#{$i} {
+        grid-column: span $i;
+    }
+}
+  
+@include from('sm'){
+    @for $i from 1 through 12 {
+        .o-grid-column-sm-#{$i} {
+        grid-column: span $i;
+        }
+    }
+}
+  
+@include from('md'){
+    @for $i from 1 through 12 {
+        .o-grid-column-md-#{$i} {
+        grid-column: span $i;
+        }
+    }
+}
+  
+@include from('lg'){
+    @for $i from 1 through 12 {
+        .o-grid-column-lg-#{$i} {
+            grid-column: span $i;
+        }
+    }
+}
+  
+@include from('xl'){
+    @for $i from 1 through 12 {
+        .o-grid-column-xl-#{$i} {
+        grid-column: span $i;
+        }
+    }
+}

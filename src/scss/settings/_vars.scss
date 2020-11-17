@@ -1,0 +1,37 @@
+$breakpoints: ( sm: 576px, md: 768px, lg: 992px, xl: 1200px);
+:root {
+    //Variables de color
+    --card-hover: #f0f0f0;
+    --color-primary: #de9531;
+    --color-base: #ebecf1;
+    --color-dark: #343a40;
+    --color-scroll: #9d9ea0;
+    --color-scroll-hover: #686d76;
+    //Variables de apilamiento
+    --z-back: -10;
+    --z-normal: 1;
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-modal: 1000;
+    --z-toast: 2000;
+    //variables de tipografía
+    //*Rango 0.16rem
+    --font-size-body: .89rem;
+    --font-size-h1: 1.93rem;
+    --font-size-h2: 1.68rem;
+    --font-size-h3: 1.43rem;
+    --font-size-h4: 1.18rem;
+    @media screen and (min-width: map-get($breakpoints, sm)){
+        --font-size-body: 1rem;
+        --font-size-h1: 2.09rem;
+        --font-size-h2: 1.84rem;
+        --font-size-h3: 1.59rem;
+        --font-size-h4: 1.34rem;
+    }
+    @media screen and (min-width: map-get($breakpoints, md)){
+        --font-size-h1: 2.25rem;
+        --font-size-h2: 2rem;
+        --font-size-h3: 1.75rem;
+        --font-size-h4: 1.5rem;
+    }
+}

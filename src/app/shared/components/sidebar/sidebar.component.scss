@@ -1,0 +1,13 @@
+.sidebar[data-color=dark]:after, .off-canvas-sidebar[data-color=dark]:after {
+    background: #343a40;    
+}
+
+.sidebar .nav li.active > a, .off-canvas-sidebar .nav li.active > a {
+    background-color: #fff;
+    box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    color: #343a40;
+}
+
+.simple-text.logo-normal, .simple-text.logo-mini{
+    font-size: 1.2rem;
+}

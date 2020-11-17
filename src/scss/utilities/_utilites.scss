@@ -1,0 +1,22 @@
+.u-cursor-pointer{
+    cursor: pointer;
+}
+
+.u-content{    
+    padding: 0 30px 30px;
+    // min-height: calc(100vh - 123px);
+    min-height: auto;
+    margin-top: -30px;
+}
+
+.u-panel-header-sm{
+    height: 200px;
+}
+
+.u-panel-header-xl{
+    height: 450px;
+}
+
+.u-fit-cover{
+    object-fit: cover;
+}
