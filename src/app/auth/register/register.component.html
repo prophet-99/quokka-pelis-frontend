@@ -13,18 +13,86 @@
                         </span>
                     </article>
                     <article class="w-100 mb-3">
-                        <form>
-                            <label class="text-dark font-weight-bold">Nombres</label>
-                            <input type="text" class="form-control form-group">
-                            <label class="text-dark font-weight-bold">Apellidos</label>
-                            <input type="text" class="form-control form-group">
-                            <label class="text-dark font-weight-bold">Correo</label>
-                            <input type="text" class="form-control form-group">
-                            <label class="text-dark font-weight-bold">Contraseña</label>
-                            <input type="password" class="form-control form-group">
-                            <label class="text-dark font-weight-bold">Frase secreta</label>
-                            <input type="password" class="form-control form-group">
-                            <button class="btn btn-primary w-100">
+                        <form [formGroup]="formRegister" class="row" 
+                            (ngSubmit)="submitRegister()">
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Nombres</label>
+                                <input type="text" class="form-control form-group"
+                                    formControlName="nombres">
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorRequired('nombres')">
+                                    <small>No puede ser vacío</small>
+                                </p>                
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Apellidos</label>
+                                <input type="text" class="form-control form-group"
+                                    formControlName="apellidos">
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorRequired('apellidos')">
+                                    <small>No puede ser vacío</small>
+                                </p>                    
+                            </div>                                
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Correo</label>
+                                <input type="text" class="form-control form-group"
+                                    formControlName="correo">
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorRequired('correo')">
+                                    <small>No puede ser vacío</small>
+                                </p>                    
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorEmail">
+                                    <small>Debe ser un correo válido</small>
+                                </p>                   
+                            </div>                                
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Contraseña</label>
+                                <input type="password" class="form-control form-group"
+                                    formControlName="contrasenia">
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorRequired('contrasenia')">
+                                    <small>No puede ser vacío</small>
+                                </p>                    
+                            </div>                                
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Frase secreta</label>
+                                <input type="password" class="form-control form-group"
+                                    formControlName="contraseniaPhrase">
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorRequired('contraseniaPhrase')">
+                                    <small>No puede ser vacío</small>
+                                </p>                    
+                            </div>                                
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Télefono</label>
+                                <input type="number" class="form-control form-group"
+                                    formControlName="telefono">
+                                <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                    [class.d-block]="hasErrorRequired('telefono')">
+                                    <small>No puede ser vacío</small>
+                                </p>                    
+                            </div>                            
+                            <div class="col-12 col-md-6 px-2">
+                                <label class="text-dark font-weight-bold">Género</label>
+                                <article class="form-group mb-3 d-flex">
+                                    <section class="custom-control custom-radio mr-3">
+                                        <input type="radio" class="custom-control-input" 
+                                            id="cc-mas" formControlName="genero" value="M">
+                                        <label class="custom-control-label text-dark" for="cc-mas">
+                                            Masculino
+                                        </label>
+                                    </section>
+                                    <section class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" 
+                                            id="cc-fem" formControlName="genero" value="F">
+                                        <label class="custom-control-label text-dark" for="cc-fem">
+                                            Femenino
+                                        </label>
+                                    </section>
+                                </article>
+                            </div>    
+                            <button class="btn btn-primary w-100" [disabled]="formRegister.invalid">
                                 Registrarme
                             </button>
                         </form>

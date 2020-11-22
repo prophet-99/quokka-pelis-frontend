@@ -12,6 +12,11 @@ import { SerieDetalleComponent } from './series/serie-detalle/serie-detalle.comp
 import { SerieDetalleVideoComponent } from './series/serie-detalle-video/serie-detalle-video.component';
 import { PeliculaDetalleVideoComponent } from './peliculas/pelicula-detalle-video/pelicula-detalle-video.component';
 import { HomeComponent } from './home/home.component';
+import { PeliculaConfComponent } from './mantenimientos/pelicula-conf/pelicula-conf.component';
+import { SerieConfComponent } from './mantenimientos/serie-conf/serie-conf.component';
+import { UsuarioConfComponent } from './mantenimientos/usuario-conf/usuario-conf.component';
+import { GeneroConfComponent } from './mantenimientos/genero-conf/genero-conf.component';
+import { RolConfComponent } from './mantenimientos/rol-conf/rol-conf.component';
 
 
 @NgModule({
@@ -24,7 +29,12 @@ import { HomeComponent } from './home/home.component';
     SerieDetalleComponent,
     SerieDetalleVideoComponent,
     PeliculaDetalleVideoComponent,
-    HomeComponent
+    HomeComponent,
+    PeliculaConfComponent,
+    SerieConfComponent,
+    UsuarioConfComponent,
+    GeneroConfComponent,
+    RolConfComponent
   ],  imports: [
     CommonModule,
     PagesRoutingModule,

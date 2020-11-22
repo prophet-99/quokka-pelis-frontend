@@ -10,6 +10,18 @@
             <div class="o-grid-row">
                 <section class="o-grid-column-3">
                     <p class="font-weight-bold">Géneros</p>
+                    <article>
+                      <p class="d-flex justify-content-between align-items-center o-text-secondary sh-genero" 
+                        *ngFor="let g of [1,2,3,4,5,6,7,8,9,7,8,9]"> 
+                        <span>
+                          <i class="fas fa-box-open"></i>
+                          Terror
+                        </span>
+                        <span class="badge badge-dark">
+                          220
+                        </span>
+                      </p>
+                    </article>
                 </section>
                 <section class="o-grid-column-9">
                     <p class="font-weight-bold">Estrenos</p>
@@ -55,10 +67,7 @@
                         </a>
                     </div>
                 </section>
-                <section class="o-grid-column-3">
-                    <p class="font-weight-bold">Año de lanzamiento</p>
-                </section>
-                <section class="o-grid-column-9">
+                <section class="o-grid-column-12">
                     <p class="font-weight-bold">Últimos lanzamientos</p>
                     <div class="o-grid-row">
                         <article class="card o-grid-column-3 u-cursor-pointer c-card-hover" *ngFor="let i of [1,2,3,4,5,6,7,8]">

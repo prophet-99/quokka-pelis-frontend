@@ -13,20 +13,40 @@
                         </span>
                     </article>
                     <article class="w-100 mb-3">
-                        <form>
+                        <form [formGroup]="formLogin" (ngSubmit)="submitLogin()">
                             <label class="text-dark font-weight-bold">Correo</label>
-                            <input type="text" class="form-control form-group">
+                            <input type="text" class="form-control form-group"
+                                formControlName="email">
+                            <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                [class.d-block]="hasErrorRequired('email')">
+                                <small>No puede ser vacío</small>
+                            </p>                
+                            <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                [class.d-block]="hasErrorEmail">
+                                <small>Debe ser un correo válido</small>
+                            </p>                   
                             <label class="text-dark font-weight-bold">Contraseña</label>
-                            <input type="password" class="form-control form-group">
+                            <input type="password" class="form-control form-group"
+                                formControlName="password">
+                            <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                [class.d-block]="hasErrorRequired('password')">
+                                <small>No puede ser vacío</small>
+                            </p>
                             <label class="text-dark font-weight-bold">Frase secreta</label>
-                            <input type="password" class="form-control form-group">
+                            <input type="password" class="form-control form-group"
+                                formControlName="phrase">
+                            <p class="text-danger mb-2 u-valid-form-margin d-none" 
+                                [class.d-block]="hasErrorRequired('phrase')">
+                                <small>No puede ser vacío</small>
+                            </p>                                
                             <section class="custom-control custom-checkbox form-group">
-                                <input type="checkbox" class="custom-control-input" id="cc-rmb">
+                                <input type="checkbox" class="custom-control-input" 
+                                    id="cc-rmb" formControlName="remember">
                                 <label class="custom-control-label text-dark font-weight-bold" for="cc-rmb">
                                     Recordar mis datos
                                 </label>
                             </section>
-                            <button class="btn btn-primary w-100">
+                            <button class="btn btn-primary w-100" [disabled]="formLogin.invalid">
                                 Ingresar
                             </button>
                         </form>

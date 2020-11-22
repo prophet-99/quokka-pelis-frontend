@@ -12,6 +12,12 @@
     </div>
     <div class="sidebar-wrapper" id="sidebar-wrapper">
       <ul class="nav">
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/dashboard">
+            <i class="fas fa-home"></i>
+            <p class="font-weight-bold">Inicio</p>
+          </a>
+        </li>
         <li routerLinkActive="active">
           <a routerLink="/dashboard/peliculas">
             <i class="fas fa-film"></i>
@@ -36,6 +42,45 @@
             <p class="font-weight-bold">Mis pagos</p>
           </a>
         </li>
+
+        <li>
+          <p class="m-3 text-white">
+            <small>
+              Mantenimientos
+            </small>
+          </p>
+        </li>
+
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/mantenimientos/roles">
+            <i class="fas fa-cog"></i>
+            <p class="font-weight-bold">Roles</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/mantenimientos/usuarios">
+            <i class="fas fa-cog"></i>
+            <p class="font-weight-bold">Usuarios</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/mantenimientos/generos">
+            <i class="fas fa-cog"></i>
+            <p class="font-weight-bold">Géneros</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/mantenimientos/peliculas">
+            <i class="fas fa-cog"></i>
+            <p class="font-weight-bold">Peliculas</p>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/mantenimientos/series">
+            <i class="fas fa-cog"></i>
+            <p class="font-weight-bold">Series</p>
+          </a>
+        </li>        
       </ul>
     </div>
 </section>

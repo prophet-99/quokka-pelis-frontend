@@ -11,6 +11,11 @@ import {
     PeliculaDetalleVideoComponent
 } from './peliculas/pelicula-detalle-video/pelicula-detalle-video.component';
 import { HomeComponent } from './home/home.component';
+import { PeliculaConfComponent } from './mantenimientos/pelicula-conf/pelicula-conf.component';
+import { SerieConfComponent } from './mantenimientos/serie-conf/serie-conf.component';
+import { UsuarioConfComponent } from './mantenimientos/usuario-conf/usuario-conf.component';
+import { GeneroConfComponent } from './mantenimientos/genero-conf/genero-conf.component';
+import { RolConfComponent } from './mantenimientos/rol-conf/rol-conf.component';
 
 const routes: Routes = [
   { path: '',
@@ -22,7 +27,12 @@ const routes: Routes = [
       { path: 'series', component: SeriesComponent },
       { path: 'series/:id', component: SerieDetalleComponent },
       { path: 'perfil', component: PerfilComponent },
-      { path: 'pagos', component: PagosComponent }
+      { path: 'pagos', component: PagosComponent },
+      { path: 'mantenimientos/usuarios', component: UsuarioConfComponent },
+      { path: 'mantenimientos/generos', component: GeneroConfComponent },
+      { path: 'mantenimientos/roles', component: RolConfComponent },
+      { path: 'mantenimientos/peliculas', component: PeliculaConfComponent },
+      { path: 'mantenimientos/series', component: SerieConfComponent }
     ]
   }
 ];
