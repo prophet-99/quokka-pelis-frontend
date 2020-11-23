@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
       email: correo, password: contrasenia,
       phrase: contraseniaPhrase
     };
-    this.usuarioService.saveUsuario(usuarioRequest)
+    this.usuarioService.save(usuarioRequest)
       .pipe(
         catchError( this.handleError ),
         filter( ({ ok }) => (ok) ),

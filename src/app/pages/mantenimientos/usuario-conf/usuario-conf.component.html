@@ -11,8 +11,9 @@
                 </div>
             </article>
             <article>
-                <button class="btn btn-dark bg-dark">
-                    Agregar
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-usuario" (click)="handleCreateUsuario()">
+                  Agregar
                 </button>
             </article>
         </section>
@@ -44,10 +45,10 @@
                         <td>
                             <div class="btn-group">
                                 <button class="btn btn-outline-default" data-toggle="modal" 
-                                    data-target="#modal-usuario">
+                                    data-target="#modal-usuario" (click)="handleEditUsuario(usuario)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn btn-outline-danger">
+                                <button class="btn btn-outline-danger" (click)="deleteUsuario(usuario.id)">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -69,11 +70,97 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </section>
-            <section class="modal-body">
-                
+            <section class="modal-body" [formGroup]="formUsuario">
+                <article class="form-group">
+                    <label for="">Nombres</label>
+                    <input type="text" class="form-control" 
+                        formControlName="nombres">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('nombres')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Apellidos</label>
+                    <input type="text" class="form-control" 
+                        formControlName="apellidos">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('apellidos')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Correo</label>
+                    <input type="text" class="form-control" 
+                        formControlName="correo">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('correo')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Contraseña</label>
+                    <input type="password" class="form-control" 
+                        formControlName="contrasenia">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('contrasenia')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Frase secreta</label>
+                    <input type="password" class="form-control" 
+                        formControlName="contraseniaPhrase">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('contraseniaPhrase')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Teléfono</label>
+                    <input type="number" class="form-control" 
+                        formControlName="telefono">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('telefono')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Rol</label>
+                    <select class="form-control" formControlName="idRol">
+                        <option value="">Seleccionar rol</option>
+                        <option *ngFor="let rol of roles$ | async" [value]="rol.id">
+                            {{ rol.descripcion }}
+                        </option>
+                    </select>
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('idRol')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Género</label>
+                    <article class="form-group d-flex">
+                        <section class="custom-control custom-radio mr-3">
+                            <input type="radio" class="custom-control-input" 
+                                id="cc-mas" formControlName="genero" value="M">
+                            <label class="custom-control-label text-dark" for="cc-mas">
+                                Masculino
+                            </label>
+                        </section>
+                        <section class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" 
+                                id="cc-fem" formControlName="genero" value="F">
+                            <label class="custom-control-label text-dark" for="cc-fem">
+                                Femenino
+                            </label>
+                        </section>
+                    </article>
+                </article>
             </section>
             <section class="modal-footer">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveUsuario()" [disabled]="formUsuario.invalid">
                     Guardar
                 </button>
             </section>

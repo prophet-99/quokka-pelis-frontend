@@ -1,17 +1,10 @@
 <article class="panel-header px-3 px-sm-5">
     <div class="header text-center">
         <h2 class="title">Roles</h2>
-        <section class="d-flex justify-content-between align-items-center">
-            <article class="input-group no-border mb-0 w-25">
-                <input type="text" class="form-control font-weight-bold" placeholder="Buscar...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="fas fa-search text-dark"></i>
-                  </div>
-                </div>
-            </article>
+        <section class="d-flex justify-content-end align-items-center">
             <article>
-                <button class="btn btn-dark bg-dark">
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                    data-target="#modal-rol" (click)="handleCreateRol()">
                     Agregar
                 </button>
             </article>
@@ -36,10 +29,10 @@
                         <td>
                             <div class="btn-group">
                                 <button class="btn btn-outline-default" data-toggle="modal" 
-                                    data-target="#modal-usuario">
+                                    data-target="#modal-rol" (click)="handleEditRol(rol)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn btn-outline-danger">
+                                <button class="btn btn-outline-danger" (click)="deleteRol(rol.id)">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -52,7 +45,7 @@
     </section>
 </article>
 
-<article class="modal fade" id="modal-usuario" aria-hidden="true">
+<article class="modal fade" id="modal-rol" aria-hidden="true">
     <div class="modal-dialog">
         <article class="modal-content">
             <section class="modal-header">
@@ -61,11 +54,20 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </section>
-            <section class="modal-body">
-                
+            <section class="modal-body" [formGroup]="formRol">
+                <article class="form-group">
+                    <label for="">Descripción</label>
+                    <input type="text" class="form-control" 
+                        formControlName="descripcion">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('descripcion')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
             </section>
             <section class="modal-footer">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" 
+                    (click)="saveRol()" [disabled]="formRol.invalid">
                     Guardar
                 </button>
             </section>

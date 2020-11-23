@@ -23,4 +23,29 @@ export class RolService {
       map( ({ roles }) => roles )
     );
   }
+
+  public save(id: number, descripcion: string): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.post<{ ok: boolean, msg: string }>(
+      this.URL_API, { id, descripcion }
+    ).pipe(
+      catchError( ({ error }) => this.handleError(error) )
+    );
+  }
+
+  public deleteById(idRol: number): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.delete<{ok: boolean, msg: string}>(
+      `${ this.URL_API }/${ idRol }`
+    );
+  }
+
+  private handleError(error): Observable<ErrorType>{
+    if (error.errors)
+      return throwError({ ok: false, msg: 'Error de request', codeError: -1 });
+    else{
+      const err = error.msg.originalError.info;
+      return throwError({ ok: false, msg: err.message, codeError: err.number });
+    }
+  }
 }
+
+type ErrorType = { ok: boolean, msg: string, codeError: number };

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
@@ -38,6 +39,7 @@ import { RolConfComponent } from './mantenimientos/rol-conf/rol-conf.component';
   ],  imports: [
     CommonModule,
     PagesRoutingModule,
+    ReactiveFormsModule,
     SharedModule
   ]
 })
