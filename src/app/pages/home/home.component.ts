@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { GeneroService } from 'src/app/services/genero.service';
 import { GeneroWithCantidad } from 'src/app/models/genero-with-cantidad.model';
+import { HomeService } from '../../services/facade.service';
+import { Pelicula } from '../../models/pelicula.model';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +15,17 @@ import { GeneroWithCantidad } from 'src/app/models/genero-with-cantidad.model';
 export class HomeComponent implements OnInit {
 
   public generos$: Observable<GeneroWithCantidad[]> = null;
+  public peliculasTop3$: Observable<Pelicula[]> = null;
+  public peliculas$: Observable<Pelicula[]> = null;
 
   constructor(
-    private generoService: GeneroService
+    private homeService: HomeService
   ) { }
 
   ngOnInit(): void {
-    this.generos$ = this.generoService.findAllWithCantidad();
+    this.generos$ = this.homeService.findGenerosWithCantidad();
+    this.peliculasTop3$ = this.homeService.findTop3PeliculasEstreno();
+    this.peliculas$ = this.homeService.findPeliculasEstreno();
   }
 
 }

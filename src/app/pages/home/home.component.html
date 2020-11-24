@@ -32,28 +32,13 @@
                           <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
                         </ol>
                         <section class="carousel-inner">
-                          <article class="carousel-item active">
-                            <img src="https://images5.alphacoders.com/107/1078653.jpg" class="d-block w-100 sh-img" 
-                                alt="...">
+                          <article class="carousel-item" *ngFor="let pelicula of peliculasTop3$ | async; let i = index" 
+                            [class.active]="i === 0">
+                            <img [src]="pelicula.url_poster | routeImage" class="d-block w-100 sh-img" 
+                                [alt]="pelicula.nombre">
                             <div class="carousel-caption d-none d-md-block">
-                              <h5>First slide label</h5>
-                              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                            </div>
-                          </article>
-                          <article class="carousel-item">
-                            <img src="https://images2.alphacoders.com/779/thumb-1920-77982.jpg" class="d-block w-100 sh-img" 
-                                alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>Second slide label</h5>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                          </article>
-                          <article class="carousel-item">
-                            <img src="https://wallpapercave.com/wp/sxRURqa.jpg" class="d-block w-100 sh-img" 
-                                alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>Third slide label</h5>
-                              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                              <h5>{{ pelicula.nombre }}</h5>
+                              <p>{{ pelicula.sinopsis }}</p>
                             </div>
                           </article>
                         </section>
@@ -70,11 +55,11 @@
                 <section class="o-grid-column-12">
                     <p class="font-weight-bold">Últimos lanzamientos</p>
                     <div class="o-grid-row">
-                        <article class="card o-grid-column-3 u-cursor-pointer c-card-hover" *ngFor="let i of [1,2,3,4,5,6,7,8]">
-                            <img src="https://images4.alphacoders.com/321/thumb-1920-32154.jpg" class="card-img-top" alt="...">
+                        <article class="card o-grid-column-3 u-cursor-pointer c-card-hover" *ngFor="let pelicula of peliculas$ | async">
+                            <img [src]="pelicula.url_poster | routeImage" class="card-img-top" [alt]="pelicula.nombre">
                             <section class="card-body">
                                 <p class="card-title text-center d-flex flex-column">
-                                    Superman regresa
+                                    {{ pelicula.nombre }}
                                     <span class="badge badge-dark mt-3">
                                         2020
                                     </span>
