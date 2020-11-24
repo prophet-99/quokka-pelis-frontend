@@ -1,1 +1,85 @@
-<p>genero-conf works!</p>
+<article class="panel-header px-3 px-sm-5">
+    <div class="header text-center">
+        <h2 class="title">Generos</h2>
+        <section class="d-flex justify-content-between align-items-center">
+            <article class="input-group no-border mb-0 w-25">
+                <input type="text" class="form-control font-weight-bold" placeholder="Buscar...">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="fas fa-search text-dark"></i>
+                  </div>
+                </div>
+            </article>
+            <article>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-genero" (click)="handleCreateGenero()">
+                  Agregar
+                </button>
+            </article>
+        </section>
+    </div>
+</article>
+
+<article class="u-content">
+    <section class="card">
+        <div class="card-body">
+            <section class="tables-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="px-3 font-weight-normal">Nombres</th>
+                        <th scope="col" class="px-3 font-weight-normal">Acciones</th>
+                      </tr>
+
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let genero of generos$ | async">
+                        <td class="px-3">{{ genero.descripcion | titlecase }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-default" data-toggle="modal" 
+                                    data-target="#modal-genero" (click)="handleEditGenero(genero)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="deleteGenero(genero.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+</article>
+
+<article class="modal fade" id="modal-genero" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de genero</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formGenero">
+                <article class="form-group">
+                    <label for="">Descripcion</label>
+                    <input type="text" class="form-control" 
+                        formControlName="descripcion">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('descripcion')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveGenero()" [disabled]="formGenero.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
