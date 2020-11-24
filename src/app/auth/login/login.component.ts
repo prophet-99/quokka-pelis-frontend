@@ -23,6 +23,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('QUOKKA_AUTH')){
+      this.router.navigateByUrl('/dashboard');
+      return;
+    }
     const { correo, secretPhrase } = this.authService.handleGetRemember();
     this.formLogin = this.formBuilder.group({
       email: [ correo, [ Validators.required, Validators.email ] ],

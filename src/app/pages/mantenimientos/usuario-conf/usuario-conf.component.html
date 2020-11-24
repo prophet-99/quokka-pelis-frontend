@@ -2,8 +2,9 @@
     <div class="header text-center">
         <h2 class="title">Usuarios</h2>
         <section class="d-flex justify-content-between align-items-center">
-            <article class="input-group no-border mb-0 w-25">
-                <input type="text" class="form-control font-weight-bold" placeholder="Buscar...">
+            <article class="input-group no-border mb-0 w-25" [formGroup]="formUsuario">
+                <input type="text" class="form-control font-weight-bold" 
+                    placeholder="Buscar..." formControlName="search">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <i class="fas fa-search text-dark"></i>

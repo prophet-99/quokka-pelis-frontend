@@ -18,6 +18,10 @@ import { SerieConfComponent } from './mantenimientos/serie-conf/serie-conf.compo
 import { UsuarioConfComponent } from './mantenimientos/usuario-conf/usuario-conf.component';
 import { GeneroConfComponent } from './mantenimientos/genero-conf/genero-conf.component';
 import { RolConfComponent } from './mantenimientos/rol-conf/rol-conf.component';
+import { ActorConfComponent } from './mantenimientos/actor-conf/actor-conf.component';
+import { DirectorConfComponent } from './mantenimientos/director-conf/director-conf.component';
+import { EstudioConfComponent } from './mantenimientos/estudio-conf/estudio-conf.component';
+import { PersonajeConfComponent } from './mantenimientos/personaje-conf/personaje-conf.component';
 
 
 @NgModule({
@@ -35,7 +39,11 @@ import { RolConfComponent } from './mantenimientos/rol-conf/rol-conf.component';
     SerieConfComponent,
     UsuarioConfComponent,
     GeneroConfComponent,
-    RolConfComponent
+    RolConfComponent,
+    ActorConfComponent,
+    DirectorConfComponent,
+    EstudioConfComponent,
+    PersonajeConfComponent
   ],  imports: [
     CommonModule,
     PagesRoutingModule,
