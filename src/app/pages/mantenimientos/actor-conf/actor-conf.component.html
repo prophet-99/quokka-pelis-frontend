@@ -1,1 +1,126 @@
-<p>actor-conf works!</p>
+<article class="panel-header px-3 px-sm-5">
+    <div class="header text-center">
+        <h2 class="title">Actores</h2>
+        <section class="d-flex justify-content-between align-items-center">
+            <article class="input-group no-border mb-0 w-25" [formGroup]="formActor">
+                <input type="text" class="form-control font-weight-bold" 
+                    placeholder="Buscar..." formControlName="search">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="fas fa-search text-dark"></i>
+                  </div>
+                </div>
+            </article>
+            <article>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-actor" (click)="handleCreateActor()">
+                  Agregar
+                </button>
+            </article>
+        </section>
+    </div>
+</article>
+
+<article class="u-content">
+    <section class="card">
+        <div class="card-body">
+            <section class="tables-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="px-3 font-weight-normal">Nombres</th>
+                        <th scope="col" class="px-3 font-weight-normal">Nacionalidad</th>
+                        <th scope="col" class="px-3 font-weight-normal">Género</th>
+                        <th scope="col" class="px-3 font-weight-normal">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let actor of actores$ | async">
+                        <td class="px-3">{{ actor.nombres | titlecase }} {{ actor.apellidos | titlecase }}</td>
+                        <td class="px-3">{{ actor.nacionalidad }}</td>
+                        <td class="px-3">{{ actor.genero }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-default" data-toggle="modal" 
+                                    data-target="#modal-actor" (click)="handleEditActor(actor)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="deleteActor(actor.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+</article>
+
+<article class="modal fade" id="modal-actor" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Actores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formActor">
+                <article class="form-group">
+                    <label for="">Nombres</label>
+                    <input type="text" class="form-control" 
+                        formControlName="nombres">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('nombres')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Apellidos</label>
+                    <input type="text" class="form-control" 
+                        formControlName="apellidos">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('apellidos')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Nacionalidad</label>
+                    <input type="text" class="form-control" 
+                        formControlName="nacionalidad">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('nacionalidad')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Género</label>
+                    <article class="form-group d-flex">
+                        <section class="custom-control custom-radio mr-3">
+                            <input type="radio" class="custom-control-input" 
+                                id="cc-mas" formControlName="genero" value="M">
+                            <label class="custom-control-label text-dark" for="cc-mas">
+                                Masculino
+                            </label>
+                        </section>
+                        <section class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" 
+                                id="cc-fem" formControlName="genero" value="F">
+                            <label class="custom-control-label text-dark" for="cc-fem">
+                                Femenino
+                            </label>
+                        </section>
+                    </article>
+                </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveActor()" [disabled]="formActor.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>

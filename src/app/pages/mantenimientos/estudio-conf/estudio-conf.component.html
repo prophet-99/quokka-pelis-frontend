@@ -1,1 +1,96 @@
-<p>estudio-conf works!</p>
+<article class="panel-header px-3 px-sm-5">
+    <div class="header text-center">
+        <h2 class="title">Estudios Cinematográficos</h2>
+        <section class="d-flex justify-content-between align-items-center">
+            <article class="input-group no-border mb-0 w-25" [formGroup]="formEstudio">
+                <input type="text" class="form-control font-weight-bold" 
+                    placeholder="Buscar..." formControlName="search">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="fas fa-search text-dark"></i>
+                  </div>
+                </div>
+            </article>
+            <article>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-estudio" (click)="handleCreateEstudio()">
+                  Agregar
+                </button>
+            </article>
+        </section>
+    </div>
+</article>
+
+<article class="u-content">
+    <section class="card">
+        <div class="card-body">
+            <section class="tables-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="px-3 font-weight-normal">Nombre</th>                        
+                        <th scope="col" class="px-3 font-weight-normal">Sede Principal</th>
+                        <th scope="col" class="px-3 font-weight-normal">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let estudio of estudios$ | async">
+                        <td class="px-3"> {{ estudio.nombre }} </td>
+                        <td class="px-3"> {{ estudio.sede_principal }} </td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-default" data-toggle="modal" 
+                                    data-target="#modal-estudio" (click)="handleEditEstudio(estudio)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="deleteEstudio(estudio.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+</article>
+
+<article class="modal fade" id="modal-estudio" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Estudio Cinematográfico</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formEstudio">
+                <article class="form-group">
+                    <label for="">Nombre</label>
+                    <input type="text" class="form-control" 
+                        formControlName="nombre">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('nombre')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+                <article class="form-group">
+                    <label for="">Sede Principal</label>
+                    <input type="text" class="form-control" 
+                        formControlName="sede_principal">
+                    <p class="text-danger mb-2 d-none" 
+                        [class.d-block]="hasErrorRequired('sede_principal')">
+                        <small>No puede ser vacío</small>
+                    </p>  
+                </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveEstudio()" [disabled]="formEstudio.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
