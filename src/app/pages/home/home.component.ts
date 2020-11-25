@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { GeneroWithCantidad } from 'src/app/models/genero-with-cantidad.model';
 import { HomeService } from '../../services/facade.service';

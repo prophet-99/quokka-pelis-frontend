@@ -14,35 +14,29 @@
 
 <article class="u-content">
     <div class="row">
-        <section class="col-lg-4" *ngFor="let i of [1,2,3,4,56,5,8]">
-            <article class="card card-chart c-card-hover">
+        <section class="col-lg-4 mb-4" *ngFor="let pelicula of peliculas">
+            <article class="card card-chart c-card-hover h-100">
                 <section>
-                    <img src="https://images.alphacoders.com/364/thumb-1920-3641.jpg" alt="">
+                    <img [src]="pelicula.url_poster | routeImage" [alt]="pelicula.nombre" 
+                        class="sh-thumbnail img-fluid">
                 </section>
                 <section class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
                         <h5 class="card-category">
-                            <span class="badge badge-success">
-                                Terror
+                            <span class="badge badge-success" *ngFor="let g of pelicula.generos">
+                                {{ g.descripcion }}
                             </span>
                         </h5>
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-round btn-outline-secondary 
-                                dropdown-toggle btn-simple btn-icon no-caret" 
-                                data-toggle="dropdown">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Editar</a>            
-                                <a class="dropdown-item text-danger" href="#">Eliminar</a>
-                            </div>
-                        </div>
                     </div>
                 </section>
                 <section class="card-body">
-                    <h4 class="card-title font-weight-bold m-0">Hostal I</h4> 
-                    <p>Alguna descripción media larga media larga media larga media larga media larga ..</p>
-                    <a href="#">Ver más</a>
+                    <h4 class="card-title font-weight-bold m-0">
+                        {{ pelicula.nombre }}
+                    </h4> 
+                    <p>{{ pelicula.sinopsis }}</p>
+                    <a [routerLink]="[ '/dashboard/peliculas', pelicula.id ]">
+                        Ver más
+                    </a>
                 </section>
             </article>
         </section>

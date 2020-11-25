@@ -1,42 +1,40 @@
 <article class="panel-header u-panel-header-xl px-3 px-sm-5 d-flex">    
     <div class="o-grid-row">
         <section class="o-grid-column-3 d-flex justify-content-center pb-3">
-            <img src="https://images.alphacoders.com/364/thumb-1920-3641.jpg"
+            <img [src]="pelicula.url_poster | routeImage"
               class="img-fluid u-fit-cover">
         </section>
         <section class="o-grid-column-9">
-            <h1 class="font-weight-bold text-white mb-3">Hostal I</h1>
+            <h1 class="font-weight-bold text-white mb-3">
+                {{ pelicula.nombre }}
+            </h1>
             <div class="d-flex">
               <p class="text-white mr-5"> 
-                  <span class="font-weight-bold">Año:</span> 2020
+                  <span class="font-weight-bold">Año:</span> {{ pelicula.anio_lanzamiento | date }}
               </p>
               <p class="text-white"> 
-                <span class="font-weight-bold">Duración:</span> 160 min
+                <span class="font-weight-bold">Duración:</span> {{ pelicula.duracion }}
             </p>
             </div>
             <p class="text-white"> 
                 <span class="font-weight-bold">Géneros:</span> 
-                Acción, Anime, Aventura , Fantasía, Animación, Ciencia Ficción
+                <span *ngFor="let genero of generos$ | async">
+                    {{ genero.descripcion }}, 
+                </span>
             </p>
             <p class="text-white"> 
                 <span class="font-weight-bold">Sinópsis:</span> 
-                Serie que gira en torno a Ethan y el viaje que hizo ese hombre 
-                resucitado en su búsqueda de un dragón. En este camino, el hombre 
-                se debe enfrentar a 7 demonios que son la representación de los         
-                se debe enfrentar a 7 demonios que son la representación de los 
-                trazos auxiiares porque no se p uede referir a una buena acción
-                ue son la representación de los 
-                trazos auxiiares porque no se p uede referir a una buena acción
-                ue son la representación de los 
-                trazos auxiiares porque no se p uede referir a una buena acción
+                {{ pelicula.sinopsis }}
             </p>
             <p class="text-white"> 
                 <span class="font-weight-bold">Reparto:</span> 
-                Nana Mizuki, Miyuki Sawashiro, Yuichi Nakamura, Takayuki Sugo
+                <span *ngFor="let actor of actores$ | async">
+                    {{ actor.actor }} ({{ actor.personaje }}), 
+                </span>
             </p>
         </section>
     </div>
 </article>
 <article class="u-content">
-  <app-video></app-video>
+  <app-video [urlVideo]="pelicula.url_video"></app-video>
 </article>

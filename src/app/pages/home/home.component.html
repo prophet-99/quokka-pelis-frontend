@@ -56,12 +56,13 @@
                     <p class="font-weight-bold">Últimos lanzamientos</p>
                     <div class="o-grid-row">
                         <article class="card o-grid-column-3 u-cursor-pointer c-card-hover" *ngFor="let pelicula of peliculas$ | async">
-                            <img [src]="pelicula.url_poster | routeImage" class="card-img-top" [alt]="pelicula.nombre">
+                            <img [src]="pelicula.url_poster | routeImage" class="card-img-top sh-thumbnail" 
+                              [alt]="pelicula.nombre">
                             <section class="card-body">
                                 <p class="card-title text-center d-flex flex-column">
                                     {{ pelicula.nombre }}
                                     <span class="badge badge-dark mt-3">
-                                        2020
+                                        {{ pelicula.anio_lanzamiento | date }}
                                     </span>
                                 </p>
                             </section>

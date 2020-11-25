@@ -6,6 +6,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { VideoComponent } from './components/video/video.component';
 import { RouteImagePipe } from './pipes/route-image.pipe';
+import { DomSeguroPipe } from './pipes/dom-seguro.pipe';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { RouteImagePipe } from './pipes/route-image.pipe';
     NavbarComponent,
     SidebarComponent,
     VideoComponent,
-    RouteImagePipe
+    RouteImagePipe,
+    DomSeguroPipe
   ],
   imports: [
     CommonModule,
