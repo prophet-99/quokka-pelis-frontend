@@ -25,6 +25,14 @@ export class UsuarioService {
     );
   }
 
+  public findByNameOrSurname(nameSurname: string): Observable<Usuario[]>{
+    return this.httpClient.get<{ ok: boolean, usuarios: Usuario[] }>(
+      `${ this.URL_API }?nameSurname=${ nameSurname }`
+    ).pipe(
+      map( ({ usuarios }) => usuarios )
+    );
+  }
+
   public save(usuarioRequest: UsuarioRequest): Observable<{ ok: boolean, msg: string }>{
     return this.httpClient.post<{ ok: boolean, msg: string }>(
       this.URL_API, usuarioRequest

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, of } from 'rxjs';
-import { catchError, filter, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
 
@@ -42,12 +42,24 @@ export class UsuarioConfComponent implements OnInit {
       apellidos: [ '', [ Validators.required ] ],
       telefono: [ '', [ Validators.required ] ],
       idRol: [ '', [ Validators.required ] ],
-      genero: [ 'M', [ Validators.required ] ]
+      genero: [ 'M', [ Validators.required ] ],
+      search: [ '' ]
     });
+    this.handleInitSearch();
   }
 
   private chargeUsuarios(): void{
     this.usuarios$ = this.usuarioService.findAll();
+  }
+
+  private handleInitSearch(): void{
+    this.formUsuario.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(300)
+      ).subscribe(
+        ({ search }) => this.usuarios$ = this.usuarioService.findByNameOrSurname(search)
+      );
   }
 
   public handleCreateUsuario(): void{

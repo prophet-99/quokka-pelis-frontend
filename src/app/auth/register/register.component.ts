@@ -28,6 +28,10 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('QUOKKA_AUTH')){
+      this.router.navigateByUrl('/dashboard');
+      return;
+    }
     this.formRegister = this.formBuilder.group({
       correo: [ '', [ Validators.required, Validators.email ] ],
       contrasenia: [ '', [ Validators.required ] ],

@@ -16,6 +16,10 @@ import { SerieConfComponent } from './mantenimientos/serie-conf/serie-conf.compo
 import { UsuarioConfComponent } from './mantenimientos/usuario-conf/usuario-conf.component';
 import { GeneroConfComponent } from './mantenimientos/genero-conf/genero-conf.component';
 import { RolConfComponent } from './mantenimientos/rol-conf/rol-conf.component';
+import { ActorConfComponent } from './mantenimientos/actor-conf/actor-conf.component';
+import { PersonajeConfComponent } from './mantenimientos/personaje-conf/personaje-conf.component';
+import { DirectorConfComponent } from './mantenimientos/director-conf/director-conf.component';
+import { EstudioConfComponent } from './mantenimientos/estudio-conf/estudio-conf.component';
 
 const routes: Routes = [
   { path: '',
@@ -32,7 +36,11 @@ const routes: Routes = [
       { path: 'mantenimientos/generos', component: GeneroConfComponent },
       { path: 'mantenimientos/roles', component: RolConfComponent },
       { path: 'mantenimientos/peliculas', component: PeliculaConfComponent },
-      { path: 'mantenimientos/series', component: SerieConfComponent }
+      { path: 'mantenimientos/series', component: SerieConfComponent },
+      { path: 'mantenimientos/actores', component: ActorConfComponent },
+      { path: 'mantenimientos/personajes', component: PersonajeConfComponent },
+      { path: 'mantenimientos/directores', component: DirectorConfComponent },
+      { path: 'mantenimientos/estudios', component: EstudioConfComponent }
     ]
   }
 ];

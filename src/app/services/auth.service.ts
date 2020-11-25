@@ -53,7 +53,6 @@ export class AuthService {
   }
 
   public handlePersistRemember(correo: string, secretPhrase: string): void{
-    console.log(correo, secretPhrase);
     localStorage.setItem('QUOKKA_REMEMBER', JSON.stringify({ correo, secretPhrase }));
   }
 

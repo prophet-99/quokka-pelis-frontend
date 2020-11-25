@@ -5,6 +5,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { VideoComponent } from './components/video/video.component';
+import { RouteImagePipe } from './pipes/route-image.pipe';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { VideoComponent } from './components/video/video.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    VideoComponent
+    VideoComponent,
+    RouteImagePipe
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { VideoComponent } from './components/video/video.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    VideoComponent
+    VideoComponent,
+    RouteImagePipe
   ]
 })
 export class SharedModule { }
