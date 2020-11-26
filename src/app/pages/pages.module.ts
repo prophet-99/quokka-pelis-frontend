@@ -22,6 +22,8 @@ import { ActorConfComponent } from './mantenimientos/actor-conf/actor-conf.compo
 import { DirectorConfComponent } from './mantenimientos/director-conf/director-conf.component';
 import { EstudioConfComponent } from './mantenimientos/estudio-conf/estudio-conf.component';
 import { PersonajeConfComponent } from './mantenimientos/personaje-conf/personaje-conf.component';
+import { EpisodioConfComponent } from './mantenimientos/episodio-conf/episodio-conf.component';
+import { TemporadaConfComponent } from './mantenimientos/temporada-conf/temporada-conf.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { PersonajeConfComponent } from './mantenimientos/personaje-conf/personaj
     ActorConfComponent,
     DirectorConfComponent,
     EstudioConfComponent,
-    PersonajeConfComponent
+    PersonajeConfComponent,
+    EpisodioConfComponent,
+    TemporadaConfComponent
   ],  imports: [
     CommonModule,
     PagesRoutingModule,

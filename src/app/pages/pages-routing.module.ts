@@ -20,6 +20,8 @@ import { ActorConfComponent } from './mantenimientos/actor-conf/actor-conf.compo
 import { PersonajeConfComponent } from './mantenimientos/personaje-conf/personaje-conf.component';
 import { DirectorConfComponent } from './mantenimientos/director-conf/director-conf.component';
 import { EstudioConfComponent } from './mantenimientos/estudio-conf/estudio-conf.component';
+import { EpisodioConfComponent } from './mantenimientos/episodio-conf/episodio-conf.component';
+import { TemporadaConfComponent } from './mantenimientos/temporada-conf/temporada-conf.component';
 
 const routes: Routes = [
   { path: '',
@@ -40,7 +42,9 @@ const routes: Routes = [
       { path: 'mantenimientos/actores', component: ActorConfComponent },
       { path: 'mantenimientos/personajes', component: PersonajeConfComponent },
       { path: 'mantenimientos/directores', component: DirectorConfComponent },
-      { path: 'mantenimientos/estudios', component: EstudioConfComponent }
+      { path: 'mantenimientos/estudios', component: EstudioConfComponent },
+      { path: 'mantenimientos/episodios', component: EpisodioConfComponent },
+      { path: 'mantenimientos/temporadas', component: TemporadaConfComponent }
     ]
   }
 ];
