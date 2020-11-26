@@ -3,8 +3,8 @@ export interface PeliculaRequest{
     nombre: string,
     sinopsis: String,
     anio_lanzamiento: string,
-    image: string,
-    directores: string,
-    generos: string,
-    idEstudio: number,
+    image: ImageData,
+    id_estudio: number,
+    cadenaGeneros: string,
+    cadenaDirectores: string,
 }

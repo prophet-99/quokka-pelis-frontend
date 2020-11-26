@@ -25,6 +25,14 @@ export class DirectorService {
     );
   }
 
+  public findByWord(word: string): Observable<Director[]>{
+    return this.httpClient.get<{ ok: boolean, directores: Director[] }>(
+      `${ this.URL_API }?word=${ word }`
+    ).pipe(
+      map( ({ directores }) => directores )
+    );
+  }
+
   public save(directorRequest: DirectorRequest): Observable<{ ok: boolean, msg: string }>{
     return this.httpClient.post<{ ok: boolean, msg: string }>(
       this.URL_API, directorRequest

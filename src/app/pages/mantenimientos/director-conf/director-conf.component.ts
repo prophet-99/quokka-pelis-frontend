@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, of } from 'rxjs';
-import { catchError, filter, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
 
@@ -36,10 +36,21 @@ export class DirectorConfComponent implements OnInit {
       genero: [ 'M', [ Validators.required ] ],
       search: [ '' ]
     });
+    this.handleInitSearch();
   }
 
   private chargeDirectores(): void{
     this.directores$ = this.directorService.findAll();
+  }
+
+  private handleInitSearch(): void{
+    this.formDirector.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(300)
+      ).subscribe(
+        ({ search }) => this.directores$ = this.directorService.findByWord(search)
+      );
   }
 
   public handleCreateDirector(): void{

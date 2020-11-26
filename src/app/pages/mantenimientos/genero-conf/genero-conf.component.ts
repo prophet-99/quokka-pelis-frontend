@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, of } from 'rxjs';
-import { catchError, filter, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
 
@@ -33,10 +33,21 @@ export class GeneroConfComponent implements OnInit {
       id: [ 0 ],
       descripcion: [ '', [ Validators.required ] ]
     });
+    this.handleInitSearch();
   }
 
   private chargeGeneros(): void{
     this.generos$ = this.generoService.findAll();
+  }
+
+  private handleInitSearch(): void{
+    this.formGenero.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(300)
+      ).subscribe(
+        ({ search }) => this.generos$ = this.generoService.findByWord(search)
+      );
   }
 
   public handleCreateGenero(): void{

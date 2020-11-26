@@ -28,8 +28,7 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col" class="px-3 font-weight-normal">Nombre</th>                        
-                        <th scope="col" class="px-3 font-weight-normal">Sinopsis</th>
+                        <th scope="col" class="px-3 font-weight-normal">Nombre</th>  
                         <th scope="col" class="px-3 font-weight-normal">Año</th>
                         <th scope="col" class="px-3 font-weight-normal">Poster</th>
                         <th scope="col" class="px-3 font-weight-normal">Video</th>
@@ -40,16 +39,12 @@
                     <tbody>
                       <tr *ngFor="let pelicula of peliculas$ | async">
                         <td class="px-3">{{ pelicula.nombre | titlecase }}</td>
-                        <td class="px-3">
-                            <button class="btn btn-success" data-toggle="modal" 
-                            data-target="#modal-sinopsis" (click)="handleVerSinopsis(pelicula.sinopsis)">Ver</button>
-                        </td>
                         <td class="px-3">{{ pelicula.anio_lanzamiento }}</td>
                         <td class="px-3">
-                            <button class="btn btn-success">Ver</button>
+                            <button class="btn btn-warning">Ver</button>
                         </td>
                         <td class="px-3">
-                            <button class="btn btn-success">Ver</button>
+                            <button class="btn btn-warning">Ver</button>
                         </td>
                         <td class="px-3">{{ pelicula.estudio }}</td>
                         <td>
@@ -110,7 +105,7 @@
                         <article class="form-group">
                             <label for="">Selecciona Poster</label>
                             <input type="file" class="form-control-file" 
-                                formControlName="image">
+                                formControlName="image" (change)="CargarImagen($event)">
                             <p class="text-danger mb-2 d-none" 
                                 [class.d-block]="hasErrorRequired('image')">
                                 <small>No puede ser vacío</small>
@@ -145,14 +140,14 @@
                         </article>
                         <article class="form-group">
                             <label for="">Estudio</label>
-                            <select class="form-control" formControlName="idEstudio">
+                            <select class="form-control" formControlName="id_estudio">
                                 <option value="">Seleccionar Estudios</option>
                                 <option *ngFor="let estudio of estudios$ | async" [value]="estudio.id">
                                     {{ estudio.nombre }}
                                 </option>
                             </select>
                             <p class="text-danger mb-2 d-none" 
-                                [class.d-block]="hasErrorRequired('idEstudio')">
+                                [class.d-block]="hasErrorRequired('id_estudio')">
                                 <small>No puede ser vacío</small>
                             </p>  
                         </article>
@@ -192,26 +187,4 @@
         </article>
     </div>
 </article>
-<article class="modal fade" id="modal-sinopsis" aria-hidden="true">
-    <div class="modal-dialog">
-        <article class="modal-content">
-            <section class="modal-header">
-                <h5 class="modal-title">Sinopsis de la Pelicula</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </section>
-            <section class="modal-body" [formGroup]="formPelicula">
-                <article class="form-group">
-                    <textarea class="form-control" formControlName="sinopsis" rows="10"></textarea>
-                    <p class="text-danger mb-2 d-none" 
-                        [class.d-block]="hasErrorRequired('sinopsis')">
-                        <small>No puede ser vacío</small>
-                    </p>  
-                </article>
-            </section>
-            <section class="modal-footer">
-            </section>
-        </article>
-    </div>
-</article>
+

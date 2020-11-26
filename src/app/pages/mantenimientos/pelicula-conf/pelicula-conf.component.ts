@@ -30,6 +30,7 @@ export class PeliculaConfComponent implements OnInit {
   public generos$: Observable<Genero[]> = null;
   public videos$: Observable<Video[]> = null;
   public formPelicula: FormGroup = null;
+  public archivo;
 
   constructor(
     private peliculaService: PeliculasService,
@@ -37,13 +38,15 @@ export class PeliculaConfComponent implements OnInit {
     private generoService: GeneroService,
     private directorService: DirectorService,
     private videoService: VideoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    
   ) { }
 
   ngOnInit(): void {
     this.estudios$ = this.estudioService.findAll();
     this.directores$ = this.directorService.findAll();
     this.generos$ = this.generoService.findAll();
+    this.videos$ = this.videoService.findAll();
     this.chargePeliculas();
     this.formPelicula = this.formBuilder.group({
       id: [ 0 ],
@@ -56,7 +59,7 @@ export class PeliculaConfComponent implements OnInit {
       duracion: [ '', [ Validators.required ] ],
       directores: [ '', [ Validators.required ] ],
       generos: [ '', [ Validators.required ] ],
-      idEstudio: [ '', [ Validators.required ] ],
+      id_estudio: [ '', [ Validators.required ] ],
       search: [ '' ]
     });
     this.handleInitSearch();
@@ -87,7 +90,7 @@ export class PeliculaConfComponent implements OnInit {
     this.formPelicula.get('directores').setValue('');
     this.formPelicula.get('generos').setValue('');
     this.formPelicula.get('url_video').setValue('');
-    this.formPelicula.get('idEstudio').setValue('');
+    this.formPelicula.get('id_estudio').setValue('');
     this.formPelicula.updateValueAndValidity();
   }
 
@@ -95,34 +98,56 @@ export class PeliculaConfComponent implements OnInit {
     this.formPelicula.get('sinopsis').setValue(sinopsis);
   }
 
-  public handleEditUsuario(pelicula: Pelicula): void{
+  public handleEditPelicula(pelicula: Pelicula): void{
     this.formPelicula.get('id').setValue(pelicula.id);
     this.formPelicula.get('nombre').setValue(pelicula.nombre);
     this.formPelicula.get('sinopsis').setValue(pelicula.sinopsis);
     this.formPelicula.get('anio_lanzamiento').setValue(pelicula.anio_lanzamiento);
-    this.formPelicula.get('image').setValue(pelicula.url_poster);
-    this.formPelicula.get('valoracion').setValue('');
-    this.formPelicula.get('duracion').setValue('');
-    this.formPelicula.get('directores').setValue('');
-    this.formPelicula.get('generos').setValue('');
     this.formPelicula.get('url_video').setValue(pelicula.url_video);
-    this.formPelicula.get('idEstudio').setValue('');
+    this.formPelicula.get('valoracion').setValue(pelicula.valoracion);
+    this.formPelicula.get('duracion').setValue(pelicula.duracion);
+    this.formPelicula.get('id_estudio').setValue(pelicula.id_estudio);
     this.formPelicula.updateValueAndValidity();
   }
 
+  public CargarImagen(event): void{
+    this.archivo = event.target.files[0];
+  };
+
   public savePelicula(): void{
     if (this.formPelicula.invalid) return;
-    const { id, nombre, sinopsis, anio_lanzamiento, image, valoracion, duracion, url_video ,idEstudio, directores, generos } = this.formPelicula.value;
-    const videoRequest: VideoRequest = {
-         id , url_video, valoracion, duracion
-    };
-    this.videoService.save(videoRequest)
-    .pipe(
-      catchError(this.handleError),
-      filter( ({ok}) => (ok) ),
-    );
-    const peliculaRequest: PeliculaRequest = {
-      id, nombre, sinopsis, anio_lanzamiento, image, idEstudio, directores, generos};
+    const { id, nombre, sinopsis, anio_lanzamiento, valoracion, duracion, url_video ,id_estudio, directores, generos } = this.formPelicula.value;
+    var cadenaDirectores = '', cadenaGeneros = '';
+    directores.forEach((element, indice) => {
+      if(indice == directores.length){
+        cadenaDirectores = cadenaDirectores + element;
+      }else{
+        cadenaDirectores = cadenaDirectores + element + '-';
+      }
+    });
+    console.log(directores.length);
+    generos.forEach((element, indice) => {
+      if(indice === generos.length){
+        cadenaGeneros = cadenaGeneros + element;
+      }else{
+        cadenaGeneros = cadenaGeneros + element + '-';
+      }
+    });
+    console.log(cadenaDirectores);
+    console.log(cadenaGeneros);
+    var formData = new FormData();
+    formData.append('id', id);
+    formData.append('nombre', nombre);
+    formData.append('sinopsis', sinopsis);
+    formData.append('anio_lanzamiento', anio_lanzamiento);
+    formData.append('image', this.archivo);
+    formData.append('id_estudio',id_estudio);
+    formData.append('cadenaDirectores',cadenaDirectores);
+    formData.append('cadenaGeneros',cadenaGeneros);
+    formData.append('url_video',url_video);
+    formData.append('valoracion',valoracion);
+    formData.append('duracion',duracion);
+    const peliculaRequest: FormData = formData ;
     this.peliculaService.save(peliculaRequest)
     .pipe(
       catchError( this.handleError ),

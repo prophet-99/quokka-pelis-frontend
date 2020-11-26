@@ -25,6 +25,14 @@ export class EstudioService {
     );
   }
 
+  public findByWord(word: string): Observable<Estudio[]>{
+    return this.httpClient.get<{ ok: boolean, estudios: Estudio[] }>(
+      `${ this.URL_API }?word=${ word }`
+    ).pipe(
+      map( ({ estudios }) => estudios )
+    );
+  }
+
   public save(estudioRequest: EstudioRequest): Observable<{ ok: boolean, msg: string }>{
     return this.httpClient.post<{ ok: boolean, msg: string }>(
       this.URL_API, estudioRequest

@@ -25,6 +25,14 @@ export class GeneroService {
     );
   }
 
+  public findByWord(word: string): Observable<Genero[]>{
+    return this.httpClient.get<{ ok: boolean, generos: Genero[] }>(
+      `${ this.URL_API }?word=${ word }`
+    ).pipe(
+      map( ({ generos }) => generos )
+    );
+  }
+
   public save(generoRequest: GeneroRequest): Observable<{ ok: boolean, msg: string }>{
     return this.httpClient.post<{ ok: boolean, msg: string }>(
       this.URL_API, generoRequest

@@ -35,7 +35,17 @@ export class EstudioConfComponent implements OnInit {
       sede_principal: [ '', [ Validators.required ] ],
       search: [ '' ]
     });
-    //this.handleInitSearch();
+    this.handleInitSearch();
+  }
+
+  private handleInitSearch(): void{
+    this.formEstudio.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(300)
+      ).subscribe(
+        ({ search }) => this.estudios$ = this.estudioService.findByWord(search)
+      );
   }
 
   private chargeEstudios(): void{

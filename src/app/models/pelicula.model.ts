@@ -5,9 +5,8 @@ export interface Pelicula{
     anio_lanzamiento: string;
     url_poster: string;
     url_video: string;
-    idEstudio: number;
-    directores: string;
-    generos: string;
+    estudio: string;
+    id_estudio: number;
     valoracion: string;
     duracion: string;
 }

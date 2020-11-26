@@ -34,7 +34,7 @@ export class PeliculasService {
     );
   }
 
-  public save(peliculaRequest: PeliculaRequest): Observable<{ ok: boolean, msg: string }>{
+  public save(peliculaRequest: FormData): Observable<{ ok: boolean, msg: string }>{
     return this.httpClient.post<{ ok: boolean, msg: string }>(
       this.URL_API, peliculaRequest
     ).pipe(
