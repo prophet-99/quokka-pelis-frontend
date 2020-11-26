@@ -75,4 +75,28 @@ export class SeriesService {
       map( ({ capitulo }) => capitulo )
     );
   }
+
+  public save(serieRequest: FormData): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.post<{ ok: boolean, msg: string }>(
+      this.URL_API, serieRequest
+    ).pipe(
+      catchError( ({ error }) => this.handleError(error) )
+    );
+  }
+
+  public deleteSerie(id: number): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.delete<{ok: boolean, msg: string}>(
+      `${ this.URL_API }/${ id }`
+    );
+  }
+
+  private handleError(error): Observable<ErrorType>{
+    if (error.errors)
+      return throwError({ ok: false, msg: 'Error de request', codeError: -1 });
+    else{
+      const err = error.msg.originalError.info;
+      return throwError({ ok: false, msg: err.message, codeError: err.number });
+    }
+  }
 }
+type ErrorType = { ok: boolean, msg: string, codeError: number };

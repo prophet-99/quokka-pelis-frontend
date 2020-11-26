@@ -5,4 +5,5 @@ export interface Serie {
     anio_lanzamiento: string;
     url_poster: string;
     ESTUDIO: string;
+    id_estudio: number;
 }
