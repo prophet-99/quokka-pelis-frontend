@@ -1,8 +1,9 @@
 <article class="panel-header px-3 px-sm-5">
     <div class="header text-center">
       <h2 class="title">Películas</h2>
-      <section class="input-group no-border">
-        <input type="text" class="form-control font-weight-bold" placeholder="Buscar...">
+      <section class="input-group no-border" [formGroup]="formPelicula">
+        <input type="text" class="form-control font-weight-bold" 
+            placeholder="Buscar..." formControlName="search">
         <div class="input-group-append">
           <div class="input-group-text">
             <i class="fas fa-search text-dark"></i>
@@ -23,7 +24,7 @@
                 <section class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
                         <h5 class="card-category">
-                            <span class="badge badge-success" *ngFor="let g of pelicula.generos">
+                            <span class="badge badge-dark mr-3" *ngFor="let g of pelicula.generos">
                                 {{ g.descripcion }}
                             </span>
                         </h5>
@@ -33,7 +34,7 @@
                     <h4 class="card-title font-weight-bold m-0">
                         {{ pelicula.nombre }}
                     </h4> 
-                    <p>{{ pelicula.sinopsis }}</p>
+                    <p>{{ pelicula.sinopsis | slice : 0 : 45 }}...</p>
                     <a [routerLink]="[ '/dashboard/peliculas', pelicula.id ]">
                         Ver más
                     </a>

@@ -50,6 +50,14 @@ export class PeliculasService {
     );
   }
 
+  public findByName(query: string): Observable<Pelicula[]>{
+    return this.httpClient.get<{ ok: boolean, peliculas: Pelicula[] }>(
+      `${ this.URL_API }?word=${ query }`
+    ).pipe(
+      map( ({ peliculas }) => peliculas )
+    );
+  }
+
 }
 
 type ErrorType = { ok: boolean, msg: string, codeError: number };

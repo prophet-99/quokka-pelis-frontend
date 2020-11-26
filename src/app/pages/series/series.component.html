@@ -1,8 +1,9 @@
 <article class="panel-header px-3 px-sm-5">
     <div class="header text-center">
       <h2 class="title">Series</h2>
-      <section class="input-group no-border">
-        <input type="text" class="form-control font-weight-bold" placeholder="Buscar...">
+      <section class="input-group no-border" [formGroup]="formSerie">
+        <input type="text" class="form-control font-weight-bold" 
+            placeholder="Buscar..." formControlName="search">
         <div class="input-group-append">
           <div class="input-group-text">
             <i class="fas fa-search text-dark"></i>
@@ -14,34 +15,31 @@
 
 <article class="u-content">
     <div class="row">
-        <div class="col-lg-4" *ngFor="let i of [1,2,3,4,56,5,8]">
-        <div class="card card-chart">
-            <div class="card-header">
-            <h5 class="card-category">Global Sales</h5>
-            <h4 class="card-title">Shipped Products</h4>
-            <div class="dropdown">
-                <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                <i class="now-ui-icons loader_gear"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <a class="dropdown-item text-danger" href="#">Remove Data</a>
+      <section class="col-lg-4 mb-4" *ngFor="let serie of series">
+        <article class="card card-chart c-card-hover h-100">
+            <section>
+                <img [src]="serie.url_poster | routeImage" [alt]="serie.SERIE" 
+                    class="sh-thumbnail img-fluid">
+            </section>
+            <section class="card-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="card-category">
+                        <span class="badge badge-dark mr-3" *ngFor="let g of serie.generos">
+                            {{ g.descripcion }}
+                        </span>
+                    </h5>
                 </div>
-            </div>
-            </div>
-            <div class="card-body">
-            <div class="chart-area">
-                <canvas id="lineChartExample"></canvas>
-            </div>
-            </div>
-            <div class="card-footer">
-            <div class="stats">
-                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-            </div>
-            </div>
-        </div>
-        </div>
+            </section>
+            <section class="card-body">
+                <h4 class="card-title font-weight-bold m-0">
+                    {{ serie.SERIE }}
+                </h4> 
+                <p>{{ serie.sinopsis | slice : 0 : 45 }}...</p>
+                <a [routerLink]="[ '/dashboard/series', serie.id ]">
+                    Ver más
+                </a>
+            </section>
+        </article>
+    </section>
     </div>
 </article>

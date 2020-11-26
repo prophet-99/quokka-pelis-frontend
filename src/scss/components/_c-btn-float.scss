@@ -1,0 +1,25 @@
+.c-float{
+    &__container{
+        position: fixed;
+        bottom: 60px;
+        right: 30px;
+
+    }
+    &__btn{
+        background-color: var(--color-primary);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 0 3px -1px var(--color-dark);
+        width: 50px;
+        height: 50px;    
+        transform: scale(1);
+        transition: transform 0.5s;
+        &:hover{
+            transform: scale(1.1);
+        }
+        &:active{
+            outline: none;
+        }
+    }
+}

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable, from } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, mergeMap, tap } from 'rxjs/operators';
 
 import { PeliculasService } from 'src/app/services/facade.service';
 import { Pelicula } from 'src/app/models/pelicula.model';
 import { Genero } from 'src/app/models/genero.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-peliculas',
@@ -15,9 +16,11 @@ import { Genero } from 'src/app/models/genero.model';
 export class PeliculasComponent implements OnInit {
 
   public peliculas: IPelicula[] = [];
+  public formPelicula: FormGroup = null;
 
   constructor(
-    private peliculaService: PeliculasService
+    private peliculaService: PeliculasService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -29,10 +32,23 @@ export class PeliculasComponent implements OnInit {
             .pipe( map(gns => ({ ...pelicula, generos: gns })) )
         )
       ).subscribe( (nPelicula) => this.peliculas.push(nPelicula) );
-  }
 
-  public getGeneros(idPelicula: number): Observable<Genero[]>{
-    return this.peliculaService.findGeneros(idPelicula);
+    this.formPelicula = this.formBuilder.group({
+      search: [ '' ]
+    });
+
+    this.formPelicula.get('search').valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(300),
+        tap( (_) => this.peliculas = [] ),
+        mergeMap( (query) => this.peliculaService.findByName(query) ),
+        mergeMap( (pelicula) => from(pelicula) ),
+        mergeMap( (pelicula) =>
+          this.peliculaService.findGeneros(pelicula.id)
+            .pipe( map(gns => ({ ...pelicula, generos: gns })) )
+        ),
+      ).subscribe( (nPelicula) => this.peliculas.push(nPelicula) );
   }
 }
 interface IPelicula extends Pelicula {
