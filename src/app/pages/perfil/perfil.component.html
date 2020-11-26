@@ -35,10 +35,25 @@
                 <article class="col-12 mb-3">
                     <p class="text-center">
                         <span class="font-weight-bold">Suscripción: </span> 
-                        <span class="badge badge-warning">
-                            <i class="fa fa-star"></i>
-                            PREMIUM
-                        </span>
+
+                        <ng-container [ngSwitch]="userAuth.id_rol">
+                            <span class="badge badge-warning" *ngSwitchCase="1">
+                                <i class="fa fa-star"></i>
+                                THANOS
+                            </span>
+                            <span class="badge badge-warning" *ngSwitchCase="2">
+                                <i class="fa fa-star"></i>
+                                ULTRON MAJOR
+                            </span>
+                            <span class="badge badge-warning" *ngSwitchCase="3">
+                                <i class="fa fa-star"></i>
+                                ULTRON MINOR
+                            </span>
+                            <span class="badge badge-warning" *ngSwitchCase="4">
+                                <i class="fa fa-star"></i>
+                                JANITOR
+                            </span>
+                        </ng-container>
                     </p>
                 </article>
             </section>

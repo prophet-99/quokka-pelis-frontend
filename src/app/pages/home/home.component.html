@@ -55,7 +55,8 @@
                 <section class="o-grid-column-12">
                     <p class="font-weight-bold">Últimos lanzamientos</p>
                     <div class="o-grid-row">
-                        <article class="card o-grid-column-3 u-cursor-pointer c-card-hover" *ngFor="let pelicula of peliculas$ | async">
+                        <article class="card o-grid-column-3 u-cursor-pointer c-card-hover" *ngFor="let pelicula of peliculas$ | async"
+                          (click)="handleRedirectPelicula(pelicula.id)">
                             <img [src]="pelicula.url_poster | routeImage" class="card-img-top sh-thumbnail" 
                               [alt]="pelicula.nombre">
                             <section class="card-body">

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { GeneroWithCantidad } from 'src/app/models/genero-with-cantidad.model';
 import { HomeService } from '../../services/facade.service';
 import { Pelicula } from '../../models/pelicula.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,13 +19,18 @@ export class HomeComponent implements OnInit {
   public peliculas$: Observable<Pelicula[]> = null;
 
   constructor(
-    private homeService: HomeService
+    private homeService: HomeService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.generos$ = this.homeService.findGenerosWithCantidad();
     this.peliculasTop3$ = this.homeService.findTop3PeliculasEstreno();
     this.peliculas$ = this.homeService.findPeliculasEstreno();
+  }
+
+  public handleRedirectPelicula(id: number): void{
+    this.router.navigateByUrl(`/dashboard/peliculas/${ id }`);
   }
 
 }

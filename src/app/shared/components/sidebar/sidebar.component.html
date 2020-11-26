@@ -39,84 +39,86 @@
         <li routerLinkActive="active">
           <a routerLink="/dashboard/pagos">
             <i class="fas fa-money-bill-wave"></i>
-            <p class="font-weight-bold">Mis pagos</p>
+            <p class="font-weight-bold">Suscripción</p>
           </a>
         </li>
 
-        <li>
-          <p class="m-3 text-white">
-            <small>
-              Mantenimientos
-            </small>
-          </p>
-        </li>
+        <ng-container *ngIf="currentUser.id_rol === 1">
+          <li>
+            <p class="m-3 text-white">
+              <small>
+                Mantenimientos
+              </small>
+            </p>
+          </li>
 
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/roles">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Roles</p>
-          </a>
-        </li>
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/usuarios">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Usuarios</p>
-          </a>
-        </li>
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/generos">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Géneros</p>
-          </a>
-        </li>
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/peliculas">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Peliculas</p>
-          </a>
-        </li>
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/series">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Series</p>
-          </a>
-        </li>        
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/actores">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Actores</p>
-          </a>
-        </li>        
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/personajes">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Personajes</p>
-          </a>
-        </li>        
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/directores">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Directores</p>
-          </a>
-        </li>        
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/estudios">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Estudios</p>
-          </a>
-        </li>        
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/episodios">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Episodios</p>
-          </a>
-        </li>        
-        <li routerLinkActive="active">
-          <a routerLink="/dashboard/mantenimientos/temporadas">
-            <i class="fas fa-cog"></i>
-            <p class="font-weight-bold">Temporadas</p>
-          </a>
-        </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/roles">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Roles</p>
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/usuarios">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Usuarios</p>
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/generos">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Géneros</p>
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/peliculas">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Peliculas</p>
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/series">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Series</p>
+            </a>
+          </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/actores">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Actores</p>
+            </a>
+          </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/personajes">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Personajes</p>
+            </a>
+          </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/directores">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Directores</p>
+            </a>
+          </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/estudios">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Estudios</p>
+            </a>
+          </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/episodios">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Episodios</p>
+            </a>
+          </li>        
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/mantenimientos/temporadas">
+              <i class="fas fa-cog"></i>
+              <p class="font-weight-bold">Temporadas</p>
+            </a>
+          </li> 
+        </ng-container>       
       </ul>
     </div>
 </section>

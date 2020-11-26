@@ -22,6 +22,7 @@ import { DirectorConfComponent } from './mantenimientos/director-conf/director-c
 import { EstudioConfComponent } from './mantenimientos/estudio-conf/estudio-conf.component';
 import { EpisodioConfComponent } from './mantenimientos/episodio-conf/episodio-conf.component';
 import { TemporadaConfComponent } from './mantenimientos/temporada-conf/temporada-conf.component';
+import { SerieDetalleVideoComponent } from './series/serie-detalle-video/serie-detalle-video.component';
 
 const routes: Routes = [
   { path: '',
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'peliculas/:id', component: PeliculaDetalleVideoComponent },
       { path: 'series', component: SeriesComponent },
       { path: 'series/:id', component: SerieDetalleComponent },
+      { path: 'series/:id/temporada/:idT/capitulo/:idC', component: SerieDetalleVideoComponent },
       { path: 'perfil', component: PerfilComponent },
       { path: 'pagos', component: PagosComponent },
       { path: 'mantenimientos/usuarios', component: UsuarioConfComponent },

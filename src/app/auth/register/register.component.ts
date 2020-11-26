@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       nombres: [ '', [ Validators.required ] ],
       apellidos: [ '', [ Validators.required ] ],
       telefono: [ '', [ Validators.required ] ],
-      idRol: [ 0, [ Validators.required ] ],
+      idRol: [ 4, [ Validators.required ] ],
       genero: [ 'M', [ Validators.required ] ]
     });
   }

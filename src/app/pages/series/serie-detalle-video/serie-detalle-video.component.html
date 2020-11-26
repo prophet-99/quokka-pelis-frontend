@@ -1,42 +1,49 @@
 <article class="panel-header u-panel-header-xl px-3 px-sm-5 d-flex">    
     <div class="o-grid-row">
         <section class="o-grid-column-3 d-flex justify-content-center pb-3">
-            <img src="https://vader.news/__export/1594327540159/sites/gadgets/img/2020/07/09/expedientes-secretos-x-regresa-a-la-televisixn.jpg_410945991.jpg"
-              class="img-fluid u-fit-cover">
+            <img [src]="serie.url_poster | routeImage"
+                class="img-fluid u-fit-cover">
         </section>
         <section class="o-grid-column-9">
-            <h1 class="font-weight-bold text-white mb-3">Los expedientes X</h1>
+            <h1 class="font-weight-bold text-white mb-3">
+                {{ serie.SERIE }}
+              </h1>
             <div class="d-flex">
-              <p class="text-white mr-5"> 
-                  <span class="font-weight-bold">Año:</span> 1993
-              </p>
-              <p class="text-white"> 
-                <span class="font-weight-bold">Duración:</span> 160 min
+            <p class="text-white mr-5"> 
+                <span class="font-weight-bold">Año:</span> {{ serie.anio_lanzamiento | date }}
             </p>
             </div>
             <p class="text-white"> 
                 <span class="font-weight-bold">Géneros:</span> 
-                Acción, Anime, Aventura , Fantasía, Animación, Ciencia Ficción
+                <span *ngFor="let genero of generos$ | async">
+                    {{ genero.descripcion }}, 
+                </span>
+            </p>
+            <p class="text-white"> 
+                <span class="font-weight-bold">Temporada:</span> 
+                <span>
+                    {{ currentSeason?.descripcion }}
+                </span>
             </p>
             <p class="text-white"> 
                 <span class="font-weight-bold">Sinópsis:</span> 
-                Serie que gira en torno a Ethan y el viaje que hizo ese hombre 
-                resucitado en su búsqueda de un dragón. En este camino, el hombre 
-                se debe enfrentar a 7 demonios que son la representación de los         
-                se debe enfrentar a 7 demonios que son la representación de los 
-                trazos auxiiares porque no se p uede referir a una buena acción
-                ue son la representación de los 
-                trazos auxiiares porque no se p uede referir a una buena acción
-                ue son la representación de los 
-                trazos auxiiares porque no se p uede referir a una buena acción
+                {{ currentCapitulo?.sinopsis }}
             </p>
             <p class="text-white"> 
-                <span class="font-weight-bold">Reparto:</span> 
-                Nana Mizuki, Miyuki Sawashiro, Yuichi Nakamura, Takayuki Sugo
+            <span class="font-weight-bold">Director:</span> 
+            <span *ngFor="let director of directores$ | async">
+                {{ director.nombres | titlecase }} {{ director.apellidos | titlecase }} 
+            </span>
             </p>
         </section>
     </div>
 </article>
 <article class="u-content">
-  <app-video></app-video>
+    <app-video [urlVideo]="currentCapitulo?.url_video"></app-video>
+</article>
+
+<article class="c-float__container">
+    <button class="c-float__btn" [routerLink]="['/dashboard/series', currentSerieId]">
+        <i class="fas fa-arrow-left"></i>
+    </button>
 </article>

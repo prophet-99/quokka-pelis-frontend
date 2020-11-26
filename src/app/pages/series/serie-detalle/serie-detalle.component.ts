@@ -22,7 +22,6 @@ export class SerieDetalleComponent implements OnInit {
   };
   public generos$: Observable<Genero[]> = null;
   public directores$: Observable<Director[]> = null;
-  public seasons$: Observable<Season[]> = null;
   public seasons: ISerieDetalle[] = [];
 
   constructor(

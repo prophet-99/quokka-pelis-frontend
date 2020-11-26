@@ -10,33 +10,141 @@
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col"></th>
+                    <th scope="col" class="text-center">Básico</th>
+                    <th scope="col" class="text-center">Premium Mensual</th>
+                    <th scope="col" class="text-center">Premium Anual</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="row">
+                      Costo
+                    </th>
+                    <td class="text-center"> Gratis </td>
+                    <td class="text-center"> PEN 45 </td>
+                    <td class="text-center"> PEN 500 </td>
                   </tr>
                   <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                    <th scope="row">
+                      Peliculas y series ilimitadas (por día)
+                    </th>
+                    <td class="text-center"> <i class="fas fa-times"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
                   </tr>
                   <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
+                    <th scope="row">
+                      HD disponible
+                    </th>
+                    <td class="text-center"> <i class="fas fa-times"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Ultra HD disponible
+                    </th>
+                    <td class="text-center"> <i class="fas fa-times"></i> </td>
+                    <td class="text-center"> <i class="fas fa-times"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Descargas habilitadas
+                    </th>
+                    <td class="text-center"> <i class="fas fa-times"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
+                    <td class="text-center"> <i class="fas fa-check"></i> </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Adquirir
+                    </th>
+                    <td class="text-center">
+                      <p class="mb-0" *ngIf="currentUser.id_rol === 4; else tmpl1">
+                        <span class="badge badge-success">
+                          Actual
+                        </span>
+                      </p>
+                      <ng-template #tmpl1>
+                        <p class="mb-0">
+                          <span class="badge badge-dark">
+                            -
+                          </span>
+                        </p>
+                      </ng-template>
+                    </td>
+                    <td class="text-center">
+                      <p class="mb-0" *ngIf="currentUser.id_rol === 3; else tmpl2">
+                        <span class="badge badge-success">
+                          Actual
+                        </span>
+                      </p>
+                      <ng-template #tmpl2>
+                        <button class="btn btn-primary" (click)="handlePago('mensual')">
+                          Adquirir
+                        </button>
+                      </ng-template>
+                    </td>
+                    <td class="text-center">
+                      <p class="mb-0" *ngIf="currentUser.id_rol === 2; else tmpl3">
+                        <span class="badge badge-success">
+                          Actual
+                        </span>
+                      </p>
+                      <ng-template #tmpl3>
+                        <button class="btn btn-primary" (click)="handlePago('anual')">
+                          Adquirir
+                        </button>
+                      </ng-template>
+                    </td>
                   </tr>
                 </tbody>
             </table>
         </div>
     </section>
 </article>
+
+<article class="c-float__container" *ngIf="currentUser.id_rol === 3 || currentUser.id_rol === 2">
+  <button class="c-float__btn" data-toggle="modal" data-target="#modal-reporte">
+    <i class="fas fa-print"></i>
+  </button>
+</article>
+
+<article class="modal fade" id="modal-reporte" 
+  aria-hidden="true" *ngIf="currentUser.id_rol === 3 || currentUser.id_rol === 2">
+  <div class="modal-dialog">
+      <article class="modal-content">
+          <section class="modal-header">
+              <h5 class="modal-title">Últimos pago</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </section>
+          <section class="modal-body">
+                  <article *ngFor="let pago of pagos$ | async" class="mb-3 bg-light p-3">
+                    <h4 class="mb-0 mt-0">
+                      Fecha de pago:
+                      <span class="o-text-secondary">{{ pago.fecha_pago | date }}</span>
+                    </h4>
+                    <p class="mb-0">
+                      Concepto:
+                      <span class="o-text-secondary">{{ pago.concepto }}</span>
+                    </p>
+                    <p class="mb-0">
+                      Monto:
+                      <span class="o-text-secondary">{{ pago.monto | currency : 'PEN' }}</span> 
+                    </p>
+                  </article>  
+          </section>
+          <section class="modal-footer">
+              <button type="button" class="btn btn-primary" 
+                data-dismiss="modal">
+                  Aceptar
+              </button>
+          </section>
+      </article>
+  </div>
+</article>
+
