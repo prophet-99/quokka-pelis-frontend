@@ -1,1 +1,296 @@
-<p>serie-conf works!</p>
+<article class="panel-header px-3 px-sm-5">
+    <div class="header text-center">
+        <h2 class="title">Series</h2>
+        <section class="d-flex justify-content-between align-items-center">
+            <article class="input-group no-border mb-0 w-25" [formGroup]="formSerie">
+                <input type="text" class="form-control font-weight-bold" 
+                    placeholder="Buscar..." formControlName="search">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="fas fa-search text-dark"></i>
+                  </div>
+                </div>
+            </article>
+            <article>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-serie" (click)="handleCreateSerie()">
+                  Agregar Serie
+                </button>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-temporada" (click)="handleCreateTemp()">
+                  Agregar Temporada
+                </button>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-capitulo" (click)="handleCreateCap()">
+                  Agregar Capitulo
+                </button>
+            </article>
+        </section>
+    </div>
+</article>
+
+<article class="u-content">
+    <section class="card">
+        <div class="card-body">
+            <section class="tables-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="px-3 font-weight-normal">Nombre</th>  
+                        <th scope="col" class="px-3 font-weight-normal">Año</th>
+                        <th scope="col" class="px-3 font-weight-normal">N° Temporadas</th>
+                        <th scope="col" class="px-3 font-weight-normal">N° Capitulos</th>
+                        <th scope="col" class="px-3 font-weight-normal">Estudio</th>
+                        <th scope="col" class="px-3 font-weight-normal">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let serie of series$ | async">
+                        <td class="px-3">{{ serie.SERIE | titlecase }}</td>
+                        <td class="px-3">{{ serie.anio_lanzamiento }}</td>
+                        <td class="px-3">{{ serie.num_temp }}</td>
+                        <td class="px-3">{{ serie.num_cap }}</td>
+                        <td class="px-3">{{ serie.ESTUDIO }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-default" data-toggle="modal" 
+                                    data-target="#modal-serie" (click)="handleEditSerie(serie)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="deleteSerie(serie.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+</article>
+
+<article class="modal fade" id="modal-serie" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Serie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formSerie">
+                        <article class="form-group">
+                            <label for="">Nombre</label>
+                            <input type="text" class="form-control" 
+                                formControlName="nombre">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('nombre')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Sinopsis</label>
+                            <textarea class="form-control" formControlName="sinopsis" rows="6"></textarea>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('sinopsis')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Año de Lanzamiento</label>
+                            <input type="date" class="form-control" 
+                                formControlName="anio_lanzamiento">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('anio_lanzamiento')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Selecciona Poster</label>
+                            <input type="file" class="form-control-file" 
+                                formControlName="image" (change)="CargarImagen($event)">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('image')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Estudio</label>
+                            <select class="form-control" formControlName="id_estudio">
+                                <option value="">Seleccionar Estudios</option>
+                                <option *ngFor="let estudio of estudios$ | async" [value]="estudio.id">
+                                    {{ estudio.nombre }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('id_estudio')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Directores</label>
+                            <select multiple class="form-control" formControlName="directores">
+                                <option value="">Seleccionar Directores</option>
+                                <option *ngFor="let director of directores$ | async" [value]="director.id">
+                                    {{ director.nombres }} {{ director.apellidos }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('directores')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Generos</label>
+                            <select multiple class="form-control" formControlName="generos">
+                                <option value="">Seleccionar Generos</option>
+                                <option *ngFor="let genero of generos$ | async" [value]="genero.id">
+                                    {{ genero.descripcion }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('generos')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveSerie()" [disabled]="formSerie.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
+
+<article class="modal fade" id="modal-temporada" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Temporada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formTemporada">
+                        <article class="form-group">
+                            <label for="">Número de Temporada</label>
+                            <input type="text" class="form-control" 
+                                formControlName="numeroTemp">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredTemp('numeroTemp')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Descripcion</label>
+                            <textarea class="form-control" formControlName="descripcionTemp" rows="6"></textarea>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredTemp('descripcionTemp')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Serie</label>
+                            <select class="form-control" formControlName="id_sTemp">
+                                <option value="">Seleccionar Serie</option>
+                                <option *ngFor="let serie of series$ | async" [value]="serie.id">
+                                    {{ serie.SERIE }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredTemp('id_sTemp')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveTemp()" [disabled]="formTemporada.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
+
+<article class="modal fade" id="modal-capitulo" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Capitulo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formCapitulo">
+                        <article class="form-group">
+                            <label for="">Número</label>
+                            <input type="text" class="form-control" 
+                                formControlName="numeroCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('numeroCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Sinopsis</label>
+                            <textarea class="form-control" formControlName="sinopsisCap" rows="6"></textarea>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('sinopsisCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Temporada</label>
+                            <select class="form-control" formControlName="id_tempCap">
+                                <option value="">Seleccionar Temporada</option>
+                                <option *ngFor="let temp of temporadas$ | async" [value]="temp.id">
+                                    {{ temp.nombre }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('id_tempCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Direccion Video</label>
+                            <input type="text" class="form-control" 
+                            formControlName="url_videoCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('url_videoCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Valoracion</label>
+                            <input type="text" class="form-control" 
+                            formControlName="valoracionCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('valoracionCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Duracion</label>
+                            <input type="text" class="form-control" 
+                            formControlName="duracionCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('duracionCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveCap()" [disabled]="formCapitulo.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
+

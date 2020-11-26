@@ -5,6 +5,7 @@ import { environment } from './../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Serie } from '../models/serie.model';
+import { SerieMant } from '../models/serieMant.model';
 import { Genero } from '../models/genero.model';
 import { Actor } from '../models/actor.model';
 import { Director } from '../models/director.model';
@@ -23,6 +24,14 @@ export class SeriesService {
   public findAll(): Observable<Serie[]>{
     return this.httpClient.get<{ ok: boolean, serie: Serie[] }>(
       `${ this.URL_API }`
+    ).pipe(
+      map( ({ serie }) => serie )
+    );
+  }
+
+  public findAllMant(): Observable<SerieMant[]>{
+    return this.httpClient.get<{ok: boolean, serie: SerieMant[]}>(
+      `${ this.URL_API }/Mant`
     ).pipe(
       map( ({ serie }) => serie )
     );
@@ -75,4 +84,28 @@ export class SeriesService {
       map( ({ capitulo }) => capitulo )
     );
   }
+
+  public save(serieRequest: FormData): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.post<{ ok: boolean, msg: string }>(
+      this.URL_API, serieRequest
+    ).pipe(
+      catchError( ({ error }) => this.handleError(error) )
+    );
+  }
+
+  public deleteSerie(id: number): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.delete<{ok: boolean, msg: string}>(
+      `${ this.URL_API }/${ id }`
+    );
+  }
+
+  private handleError(error): Observable<ErrorType>{
+    if (error.errors)
+      return throwError({ ok: false, msg: 'Error de request', codeError: -1 });
+    else{
+      const err = error.msg.originalError.info;
+      return throwError({ ok: false, msg: err.message, codeError: err.number });
+    }
+  }
 }
+type ErrorType = { ok: boolean, msg: string, codeError: number };

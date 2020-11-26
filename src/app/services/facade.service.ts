@@ -9,3 +9,5 @@ export { EstudioService } from './estudio.service';
 export { ActorService } from './actor.service';
 export { VideoService } from './video.service';
 export { PersonajeService } from './personaje.service';
+export { SeriesService } from './series.service';
+export { TemporadaService } from './temporada.service';
