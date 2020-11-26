@@ -8,6 +8,8 @@ import { Pelicula } from '../models/pelicula.model';
 import { Actor } from '../models/actor.model';
 import { Genero } from '../models/genero.model';
 
+import { PeliculaRequest } from '../models/request/pelicula.request';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class PeliculasService {
 
   public findAll(): Observable<Pelicula[]>{
     return this.httpClient.get<{ ok: boolean, peliculas: Pelicula[] }>(
-      `${ this.URL_API }`
+      this.URL_API
     ).pipe(
       map( ({ peliculas }) => peliculas )
     );
@@ -29,6 +31,14 @@ export class PeliculasService {
   public findActores(idPelicula: number): Observable<Actor[]>{
     return this.httpClient.get<{ ok: boolean, peliculas: Actor[] }>(
       `${ this.URL_API }/Actors?id=${ idPelicula }`
+    ).pipe(
+      map( ({ peliculas }) => peliculas )
+    );
+  }
+
+  public findByWord(word: string): Observable<Pelicula[]>{
+    return this.httpClient.get<{ ok: boolean, peliculas: Pelicula[] }>(
+      `${ this.URL_API }?word=${ word }`
     ).pipe(
       map( ({ peliculas }) => peliculas )
     );
@@ -58,6 +68,28 @@ export class PeliculasService {
     );
   }
 
-}
+  public save(peliculaRequest: FormData): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.post<{ ok: boolean, msg: string }>(
+      this.URL_API, peliculaRequest
+    ).pipe(
+      catchError( ({ error }) => this.handleError(error) )
+    );
+  }
 
+  public deletePelicula(id: number): Observable<{ ok: boolean, msg: string }>{
+    return this.httpClient.delete<{ok: boolean, msg: string}>(
+      `${ this.URL_API }/${ id }`
+    );
+  }
+
+  private handleError(error): Observable<ErrorType>{
+    if (error.errors)
+      return throwError({ ok: false, msg: 'Error de request', codeError: -1 });
+    else{
+      const err = error.msg.originalError.info;
+      return throwError({ ok: false, msg: err.message, codeError: err.number });
+    }
+  }
+
+}
 type ErrorType = { ok: boolean, msg: string, codeError: number };

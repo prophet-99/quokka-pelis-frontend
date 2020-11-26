@@ -5,3 +5,7 @@ export { RolService } from './rol.service';
 export { PeliculasService } from './peliculas.service';
 export { GeneroService } from './genero.service';
 export { DirectorService } from './director.service';
+export { EstudioService } from './estudio.service';
+export { ActorService } from './actor.service';
+export { VideoService } from './video.service';
+export { PersonajeService } from './personaje.service';

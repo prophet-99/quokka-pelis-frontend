@@ -7,4 +7,6 @@ export interface Pelicula{
     url_video?: string;
     estudio?: string;
     duracion?: string;
+    id_estudio: number;
+    valoracion: string;
 }

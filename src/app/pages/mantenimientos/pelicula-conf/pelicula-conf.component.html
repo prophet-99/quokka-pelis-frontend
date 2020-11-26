@@ -1,1 +1,190 @@
-<p>pelicula-conf works!</p>
+<article class="panel-header px-3 px-sm-5">
+    <div class="header text-center">
+        <h2 class="title">Peliculas</h2>
+        <section class="d-flex justify-content-between align-items-center">
+            <article class="input-group no-border mb-0 w-25" [formGroup]="formPelicula">
+                <input type="text" class="form-control font-weight-bold" 
+                    placeholder="Buscar..." formControlName="search">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="fas fa-search text-dark"></i>
+                  </div>
+                </div>
+            </article>
+            <article>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-pelicula" (click)="handleCreatePelicula()">
+                  Agregar
+                </button>
+            </article>
+        </section>
+    </div>
+</article>
+
+<article class="u-content">
+    <section class="card">
+        <div class="card-body">
+            <section class="tables-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="px-3 font-weight-normal">Nombre</th>  
+                        <th scope="col" class="px-3 font-weight-normal">Año</th>
+                        <th scope="col" class="px-3 font-weight-normal">Poster</th>
+                        <th scope="col" class="px-3 font-weight-normal">Video</th>
+                        <th scope="col" class="px-3 font-weight-normal">Estudio</th>
+                        <th scope="col" class="px-3 font-weight-normal">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pelicula of peliculas$ | async">
+                        <td class="px-3">{{ pelicula.nombre | titlecase }}</td>
+                        <td class="px-3">{{ pelicula.anio_lanzamiento }}</td>
+                        <td class="px-3">
+                            <button class="btn btn-warning">Ver</button>
+                        </td>
+                        <td class="px-3">
+                            <button class="btn btn-warning">Ver</button>
+                        </td>
+                        <td class="px-3">{{ pelicula.estudio }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-default" data-toggle="modal" 
+                                    data-target="#modal-pelicula" (click)="handleEditPelicula(pelicula)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="deletePelicula(pelicula.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+</article>
+
+<article class="modal fade" id="modal-pelicula" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Pelicula</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formPelicula">
+                        <article class="form-group">
+                            <label for="">Nombre</label>
+                            <input type="text" class="form-control" 
+                                formControlName="nombre">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('nombre')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Sinopsis</label>
+                            <textarea class="form-control" formControlName="sinopsis" rows="6"></textarea>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('sinopsis')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Año de Lanzamiento</label>
+                            <input type="date" class="form-control" 
+                                formControlName="anio_lanzamiento">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('anio_lanzamiento')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Selecciona Poster</label>
+                            <input type="file" class="form-control-file" 
+                                formControlName="image" (change)="CargarImagen($event)">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('image')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Dirección del Video</label>
+                            <input type="text" class="form-control" 
+                                formControlName="url_video">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('url_video')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Valoración</label>
+                            <input type="number" class="form-control" 
+                                formControlName="valoracion">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('valoracion')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Duración</label>
+                            <input type="text" class="form-control" 
+                                formControlName="duracion">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('duracion')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Estudio</label>
+                            <select class="form-control" formControlName="id_estudio">
+                                <option value="">Seleccionar Estudios</option>
+                                <option *ngFor="let estudio of estudios$ | async" [value]="estudio.id">
+                                    {{ estudio.nombre }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('id_estudio')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Directores</label>
+                            <select multiple class="form-control" formControlName="directores">
+                                <option value="">Seleccionar Directores</option>
+                                <option *ngFor="let director of directores$ | async" [value]="director.id">
+                                    {{ director.nombres }} {{ director.apellidos }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('directores')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Generos</label>
+                            <select multiple class="form-control" formControlName="generos">
+                                <option value="">Seleccionar Generos</option>
+                                <option *ngFor="let genero of generos$ | async" [value]="genero.id">
+                                    {{ genero.descripcion }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequired('generos')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="savePelicula()" [disabled]="formPelicula.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
+
