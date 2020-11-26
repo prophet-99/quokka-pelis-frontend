@@ -14,7 +14,15 @@
             <article>
                 <button class="btn btn-dark bg-dark" data-toggle="modal" 
                   data-target="#modal-serie" (click)="handleCreateSerie()">
-                  Agregar
+                  Agregar Serie
+                </button>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-temporada" (click)="handleCreateTemp()">
+                  Agregar Temporada
+                </button>
+                <button class="btn btn-dark bg-dark" data-toggle="modal" 
+                  data-target="#modal-capitulo" (click)="handleCreateCap()">
+                  Agregar Capitulo
                 </button>
             </article>
         </section>
@@ -30,8 +38,8 @@
                       <tr>
                         <th scope="col" class="px-3 font-weight-normal">Nombre</th>  
                         <th scope="col" class="px-3 font-weight-normal">Año</th>
-                        <th scope="col" class="px-3 font-weight-normal">Poster</th>
-                        <th scope="col" class="px-3 font-weight-normal">Video</th>
+                        <th scope="col" class="px-3 font-weight-normal">N° Temporadas</th>
+                        <th scope="col" class="px-3 font-weight-normal">N° Capitulos</th>
                         <th scope="col" class="px-3 font-weight-normal">Estudio</th>
                         <th scope="col" class="px-3 font-weight-normal">Acciones</th>
                       </tr>
@@ -40,12 +48,8 @@
                       <tr *ngFor="let serie of series$ | async">
                         <td class="px-3">{{ serie.SERIE | titlecase }}</td>
                         <td class="px-3">{{ serie.anio_lanzamiento }}</td>
-                        <td class="px-3">
-                            <button class="btn btn-warning">Ver</button>
-                        </td>
-                        <td class="px-3">
-                            <button class="btn btn-warning">Ver</button>
-                        </td>
+                        <td class="px-3">{{ serie.num_temp }}</td>
+                        <td class="px-3">{{ serie.num_cap }}</td>
                         <td class="px-3">{{ serie.ESTUDIO }}</td>
                         <td>
                             <div class="btn-group">
@@ -154,6 +158,135 @@
             <section class="modal-footer">
                 <button type="button" class="btn btn-primary"
                     (click)="saveSerie()" [disabled]="formSerie.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
+
+<article class="modal fade" id="modal-temporada" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Temporada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formTemporada">
+                        <article class="form-group">
+                            <label for="">Número de Temporada</label>
+                            <input type="text" class="form-control" 
+                                formControlName="numeroTemp">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredTemp('numeroTemp')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Descripcion</label>
+                            <textarea class="form-control" formControlName="descripcionTemp" rows="6"></textarea>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredTemp('descripcionTemp')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Serie</label>
+                            <select class="form-control" formControlName="id_sTemp">
+                                <option value="">Seleccionar Serie</option>
+                                <option *ngFor="let serie of series$ | async" [value]="serie.id">
+                                    {{ serie.SERIE }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredTemp('id_sTemp')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveTemp()" [disabled]="formTemporada.invalid">
+                    Guardar
+                </button>
+            </section>
+        </article>
+    </div>
+</article>
+
+<article class="modal fade" id="modal-capitulo" aria-hidden="true">
+    <div class="modal-dialog">
+        <article class="modal-content">
+            <section class="modal-header">
+                <h5 class="modal-title">Mantenimiento de Capitulo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </section>
+            <section class="modal-body" [formGroup]="formCapitulo">
+                        <article class="form-group">
+                            <label for="">Número</label>
+                            <input type="text" class="form-control" 
+                                formControlName="numeroCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('numeroCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Sinopsis</label>
+                            <textarea class="form-control" formControlName="sinopsisCap" rows="6"></textarea>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('sinopsisCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Temporada</label>
+                            <select class="form-control" formControlName="id_tempCap">
+                                <option value="">Seleccionar Temporada</option>
+                                <option *ngFor="let temp of temporadas$ | async" [value]="temp.id">
+                                    {{ temp.nombre }}
+                                </option>
+                            </select>
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('id_tempCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Direccion Video</label>
+                            <input type="text" class="form-control" 
+                            formControlName="url_videoCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('url_videoCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Valoracion</label>
+                            <input type="text" class="form-control" 
+                            formControlName="valoracionCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('valoracionCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+                        <article class="form-group">
+                            <label for="">Duracion</label>
+                            <input type="text" class="form-control" 
+                            formControlName="duracionCap">
+                            <p class="text-danger mb-2 d-none" 
+                                [class.d-block]="hasErrorRequiredCap('duracionCap')">
+                                <small>No puede ser vacío</small>
+                            </p>  
+                        </article>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="saveCap()" [disabled]="formCapitulo.invalid">
                     Guardar
                 </button>
             </section>

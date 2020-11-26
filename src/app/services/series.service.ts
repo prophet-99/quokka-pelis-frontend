@@ -5,6 +5,7 @@ import { environment } from './../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Serie } from '../models/serie.model';
+import { SerieMant } from '../models/serieMant.model';
 import { Genero } from '../models/genero.model';
 import { Actor } from '../models/actor.model';
 import { Director } from '../models/director.model';
@@ -23,6 +24,14 @@ export class SeriesService {
   public findAll(): Observable<Serie[]>{
     return this.httpClient.get<{ ok: boolean, serie: Serie[] }>(
       `${ this.URL_API }`
+    ).pipe(
+      map( ({ serie }) => serie )
+    );
+  }
+
+  public findAllMant(): Observable<SerieMant[]>{
+    return this.httpClient.get<{ok: boolean, serie: SerieMant[]}>(
+      `${ this.URL_API }/Mant`
     ).pipe(
       map( ({ serie }) => serie )
     );

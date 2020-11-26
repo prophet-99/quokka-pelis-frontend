@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
 
-import { Serie } from 'src/app/models/serie.model';
-import { SeriesService, EstudioService, DirectorService, GeneroService} from 'src/app/services/facade.service';
+import { SerieMant } from 'src/app/models/serieMant.model';
+import { SeriesService, EstudioService, DirectorService, GeneroService, TemporadaService} from 'src/app/services/facade.service';
 import { Estudio } from 'src/app/models/estudio.model';
 import { Director } from 'src/app/models/director.model';
 import { Genero } from 'src/app/models/genero.model';
+import { Season } from 'src/app/models/season.model';
 import { SerieRequest } from '../../../models/request/serie.request';
 
 declare const $: any;
@@ -22,15 +23,19 @@ declare const $: any;
 })
 export class SerieConfComponent implements OnInit {
 
-  public series$: Observable<Serie[]> = null;
+  public series$: Observable<SerieMant[]> = null;
   public estudios$: Observable<Estudio[]> = null;
   public directores$: Observable<Director[]> = null;
   public generos$: Observable<Genero[]> = null;
+  public temporadas$: Observable<Season[]> = null;
   public formSerie: FormGroup = null;
+  public formTemporada: FormGroup = null;
+  public formCapitulo: FormGroup = null;
   public archivo;
 
   constructor(
     private serieService: SeriesService,
+    private temporadaService: TemporadaService,
     private estudioService: EstudioService,
     private generoService: GeneroService,
     private directorService: DirectorService,
@@ -41,6 +46,7 @@ export class SerieConfComponent implements OnInit {
     this.estudios$ = this.estudioService.findAll();
     this.directores$ = this.directorService.findAll();
     this.generos$ = this.generoService.findAll();
+    this.temporadas$ = this.temporadaService.findAll();
     this.chargeSeries();
     this.formSerie = this.formBuilder.group({
       id: [ 0 ],
@@ -53,11 +59,26 @@ export class SerieConfComponent implements OnInit {
       id_estudio: [ '', [ Validators.required ] ],
       search: [ '' ]
     });
+    this.formTemporada = this.formBuilder.group({
+      idTemp: [ 0 ],
+      numeroTemp: [ '', [ Validators.required ] ],
+      descripcionTemp: [ '', [ Validators.required ] ],
+      id_sTemp: [ '', [ Validators.required ] ]
+    });
+    this.formCapitulo = this.formBuilder.group({
+      idCap: [ 0 ],
+      numeroCap: [ '', [ Validators.required ] ],
+      sinopsisCap: [ '', [ Validators.required ] ],
+      id_tempCap: [ '', [ Validators.required ] ],
+      url_videoCap: [ '', [ Validators.required ] ],
+      valoracionCap: [ '', [ Validators.required ] ],
+      duracionCap: [ '', [ Validators.required ] ]
+    });
     this.handleInitSearch();
   }
 
   private chargeSeries(): void{
-    this.series$ = this.serieService.findAll();
+    this.series$ = this.serieService.findAllMant();
   }
 
   private handleInitSearch(): void{
@@ -66,7 +87,7 @@ export class SerieConfComponent implements OnInit {
         distinctUntilChanged(),
         debounceTime(300)
       ).subscribe(
-        ({ search }) => this.series$ = this.serieService.findByName(search)
+        ({ search }) => this.series$ = this.serieService.findAllMant()
       );
   }
 
@@ -82,7 +103,25 @@ export class SerieConfComponent implements OnInit {
     this.formSerie.updateValueAndValidity();
   }
 
-  public handleEditSerie(serie: Serie): void{
+  public handleCreateTemp(): void{
+    this.formTemporada.get('idTemp').setValue(0);
+    this.formTemporada.get('numeroTemp').setValue('');
+    this.formTemporada.get('descripcionTemp').setValue('');
+    this.formTemporada.get('id_sTemp').setValue('');
+    this.formTemporada.updateValueAndValidity();
+  }
+
+  public handleCreateCap(): void{
+    this.formCapitulo.get('idCap').setValue(0);
+    this.formCapitulo.get('numeroCap').setValue('');
+    this.formCapitulo.get('sinopsisCap').setValue('');
+    this.formCapitulo.get('url_videoCap').setValue('');
+    this.formCapitulo.get('valoracionCap').setValue('');
+    this.formCapitulo.get('duracionCap').setValue('');
+    this.formCapitulo.updateValueAndValidity();
+  }
+
+  public handleEditSerie(serie: SerieMant): void{
     this.formSerie.get('id').setValue(serie.id);
     this.formSerie.get('nombre').setValue(serie.SERIE);
     this.formSerie.get('sinopsis').setValue(serie.sinopsis);
@@ -94,6 +133,27 @@ export class SerieConfComponent implements OnInit {
   public CargarImagen(event): void{
     this.archivo = event.target.files[0];
   };
+
+  public saveTemp(): void{
+    if (this.formTemporada.invalid) return;
+    const { idTemp, numeroTemp,  descripcionTemp, id_sTemp} = this.formTemporada.value;
+    var formData = new FormData();
+    formData.append('id', idTemp);
+    formData.append('numero', numeroTemp);
+    formData.append('descripcion', descripcionTemp);
+    formData.append('id_serie', id_sTemp);
+    const temporadaRequest: FormData = formData ;
+    this.temporadaService.save(temporadaRequest)
+    .pipe(
+      catchError( this.handleError ),
+      filter( ({ ok }) => (ok) ),
+      tap( this.chargeSeries.bind(this) ),
+      tap( (_) => $('#modal-temporada').modal('hide') )
+    ).subscribe( (_) => Swal.fire('Operación exitosa', '', 'success'));
+  }
+
+  public saveCap(): void{
+  }
 
   public saveSerie(): void{
     if (this.formSerie.invalid) return;
@@ -158,6 +218,18 @@ export class SerieConfComponent implements OnInit {
   public hasErrorRequired(controlName: string): boolean{
     const control = this.formSerie.get(controlName);
     return (control.hasError('required') && control.touched) ?
+    true : false;
+  }
+
+  public hasErrorRequiredTemp(controlName: string): boolean{
+    const controlTemp = this.formTemporada.get(controlName);
+    return (controlTemp.hasError('required') && controlTemp.touched) ?
+    true : false;
+  }
+
+  public hasErrorRequiredCap(controlName: string): boolean{
+    const controlCap = this.formCapitulo.get(controlName);
+    return (controlCap.hasError('required') && controlCap.touched) ?
     true : false;
   }
 
